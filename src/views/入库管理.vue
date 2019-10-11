@@ -1,7 +1,7 @@
 <template lang="pug">
   .page
     page-title 入库管理
-    crud(name="入库" :static-tabel-data="staticTableData" :form="form" :select-model-src="modelSrc")
+    crud(name="入库" :static-table-data="staticTableData" :form="form" :select-model-src="modelSrc" :row-opers="rowOpers")
       .fr(slot="fr")
           el-button(type="primary" icon="el-icon-plus" @click="add") 添加
     el-dialog.mdialog(:title='title' :visible.sync='showModal' :close-on-click-modal='false' @close="dialogClose" width="1000px")
@@ -34,6 +34,7 @@
       .btns(slot='footer')
         el-button(type='primary' @click='confirm') 确定
         el-button(@click='showModal = false') 取消  
+      el-dialog.mdialog(:title='title' :visible.sync='showModal' :close-on-click-modal='false' @close="dialogClose")  
 </template>  
 </template>
 <script>
@@ -70,6 +71,15 @@ export default {
         operator:['经办人'],
         storage:['入库人'],
       },
+      rowOpers:[
+        {
+          text:'查看',
+          // type:'text',
+          handler:row=>{
+            console.log(row)
+          }
+        }
+      ],
       rules:{
 
       },

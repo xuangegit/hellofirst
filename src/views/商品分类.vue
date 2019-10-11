@@ -1,97 +1,63 @@
 <template lang="pug">
   .page
     page-title 商品分类
-    crud(name="商品分类" :form='form'  ref='form' :row-opers='rowOpers' hasIndex  :staticTableData="staticTableData"  hideOper )
-      .fr(slot="fr")
-        el-button(type="primary" icon="el-icon-plus" @click="add") 添加
-    el-dialog.mdialog(:title='title' :visible.sync='showModal' :close-on-click-modal='false' width="700px" @close="dialogClose")
-      el-form(label-width="150px" :model="formDep" :rules="rules" ref="formDep")
-        el-form-item(label="商品种类名称" prop="name")
-          el-input(v-model="formDep.name" maxLength="30" :disabled="title=='编辑商品种类'" placeholder="请输入商品种类名称" clearable)
-        el-form-item(label="二级分类:")
-          el-row.level-container
-            el-col(:span="16")
-              el-form-item.level-item(v-for="(item,index) in formDep.children" :key="index")
-                el-input(v-model="item.name" placeholder="请输入二级分类名称" clearable)
-            el-col(:span="8" style="text-align:right;position:absolute;bottom:5px;right:5px")    
-              el-button(circle icon="el-icon-plus" type="primary" @click="addNext")
-              el-button(circle icon="el-icon-delete" type="danger" @click="deleteLast")      
-      .btns(slot='footer')   
-        el-button(type='primary' @click='confirm') 确定
-        el-button(@click='showModal = false') 取消      
-</template>
+    el-tabs.tabs(v-model="activeName" @tab-click="tabChange")
+      el-tab-pane(label="一级分类" name="first")
+        //- crud(name="商品一级分类" :form='form'  ref='form'  hasIndex  hasAdd hideSelect :class="activeName=='first'?'display':'none'") 
+      el-tab-pane(label="二级分类" name="second")
+        //- crud(name="商品二级分类" :form='form2'  ref='form2'  hasIndex  hasAdd hideSelect :class="activeName=='second'?'display':'none'")
+    crud(name="商品一级分类" :form='form'  ref='form'  hasIndex  hasAdd hideSelect v-show="activeName=='first'")
+    crud(name="商品二级分类" :form='form2'  ref='form2'  hasIndex  hasAdd hideSelect v-show="activeName=='second'" :model-src="modelSrc")
+      el-form(:inline="true")
+        el-form-item(label="一级分类")
+          el-select(v-model="form2.g_first_id")
+            el-option(label="全部" value="") 
+            el-option(v-for="item in typeArray" :value="item.id" :label="item.name" :key="item.id")
+ </template>   
 <script>
+import modelSrc from '../model-srcs/商品二级分类'
 export default {
   data(){
     return{
+      typeArray:[],
+      activeName:'first',
+      modelSrc:modelSrc,
       form:{
         pg:1,
         size:20
       },
-      formDep:{
-        name:'',
-        // description:'',
-        children:[{name:""}]
+     form2:{
+        pg:1,
+        size:20,
+        g_first_id:''
       },
-      title:'添加商品种类',
-      showModal: false,
-      staticTableData:[{name:'商品种类1',rgb: '#fff520',discount: 0.8,description:'这是商品种类1'}], //测试数据
-      rowOpers:[
-        {
-          text:'编辑',
-          type:'primary',
-          handler:row=>{
-            Object.assign(this.formDep,row)
-            this.showModal= true
-            this.title='编辑商品分类'
-          }
-        }
-      ],
-      rules:{
-        name:[{required:true,message:'商品种类名称'}],
-        rgb:[{required:true,message:'请输入rgb颜色值'}],
-        discount:[{required:true,message:'请输入折扣值'}]
-      }
+      selectModelSrc:{
+        g_first_id:['一级分类','select',{mapper:modelSrc.g_first_id[2].mapper,}],
+      },
+      // staticTableData:[{g_first_name:'商品种类1',img:'',description:'这是商品种类1'}], //测试数据
     }
   },
   mounted(){
-
+    this.getFirst()
   },
   methods:{
-    add(){
-      this.showModal = true
-      this.title="添加商品种类"
+    getFirst(){ //获取一级分类是的数据
+      this.$_app.get('商品一级分类').then(d=>{
+        console.log('商品一级分类',d)
+        d.data.ret.forEach(e=>{
+          this.modelSrc.g_first_id[2].mapper[e.id]=e.g_first_name
+          this.typeArray.push({id:e.id,name:e.g_first_name})
+        }) 
+        console.log('mapper', this.modelSrc.g_first_id[2].mapper)
+      })
     },
-    confirm(){
-
-    },
-    dialogClose(){
-      this.$refs.formDep.resetFields()
-    },
-    addNext(){
-      this.formDep.children.push({name:''})
-    },
-    deleteLast(){
-      this.formDep.children.shift()
+    tabChange(){
+      console.log(this.activeName)
+      console.log('mapper', this.modelSrc.g_first_id[2].mapper)
     }
   }
 }
 </script>
-<style scoped>
-  .block{
-    margin:10px 0;
-  }
-  .level-container{
-    padding: 20px 10px;
-    border:1px solid #cccccc;
-  }
-  .level-item{
-    margin-bottom:10px;
-  }
-  .level-item:nth-last-child(1){
-    margin:0!important;
-  }
-</style>
 <style>
 .level-item{
     margin-bottom:10px;

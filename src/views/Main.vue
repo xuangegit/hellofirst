@@ -73,6 +73,7 @@ export default {
           return this.$_app.get('loginOut')
         }).then(d=>{
           // this.$message.success(d)
+          localStorage.clear()
           sessionStorage.clear()
           vm.$router.push({
             path: '/login',
