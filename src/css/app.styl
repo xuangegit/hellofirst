@@ -1,0 +1,97 @@
+html, body, #app
+  background: #f6f6f8;
+  color #000
+  font-family "Microsoft Yahei",'Avenir', Helvetica, Arial, sans-serif
+  font-size: 14px;
+  height: 100%
+  -webkit-font-smoothing antialiased
+  margin: 0
+
+::-webkit-scrollbar-track-piece
+    background-color: transparent;
+    -webkit-border-radius:0;
+::-webkit-scrollbar
+    width:17px;
+    height:17px;
+::-webkit-scrollbar-thumb
+    height:50px;
+    margin: 2px;
+    background-color: rgba(0, 0, 0, 0.2);
+    background-clip: content-box;
+    -webkit-border-radius: 8px;
+    border: 3px solid transparent;
+::-webkit-scrollbar-thumb:hover
+    background-color:rgba(0, 0, 0, 0.5);
+
+main>.page
+  min-height 100%
+  padding 10px
+  position relative
+  .el-pagination
+    position absolute
+    bottom -5px
+    // right 10px
+    right 50px
+.el-input, .el-select, .el-textarea, .el-input-number, .el-range-editor 
+  width: 100%!important 
+.el-table
+  font-size: 12px;
+
+.el-table.narrow .cell
+  padding 0 3px
+
+.el-table.glow .cell
+  text-shadow 0 0 4px #fff
+
+*
+  box-sizing border-box
+//页面标题
+.page-title
+  font-size 24px
+  padding 10px
+
+.fr
+  float right
+.bird-select
+  width 100%
+.bird-date-picker
+  width 100%!important  
+.crud
+  margin-top 10px
+  position relative
+  padding-bottom 32px
+  &.hide-paging
+    padding-bottom 0
+  //表格上方功能条
+  .functions
+    position relative
+    overflow hidden
+    text-align left
+    >form.el-form
+      display inline
+      .model-inputs
+        display inline
+    .el-form-item__content
+      >.el-input, >.el-autocomplete
+        width 140px
+      >.el-select
+        >.el-input
+          width 180px
+      >.el-input-number
+        width 140px
+    .el-date-editor
+      width 150px
+      &.el-date-editor--datetime
+        width 200px
+    >button:not(:last-child)
+      margin-right 10px
+    .el-button
+      align-items center
+      display inline-flex
+      height 32px
+      justify-content center
+      margin-bottom 12px
+      padding 8px 9px
+      width 80px
+      .iconfont
+        font-size 14px

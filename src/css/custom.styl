@@ -1,0 +1,130 @@
+body .el-table th.gutter
+    display table-cell!important
+
+body .el-table colgroup.gutter
+    display table-cell!important
+
+.el-table
+  color #000
+  .el-button
+    margin-bottom 3px
+    margin-top 3px
+.el-table td, .el-table th
+  height 40px
+  padding 0
+  border-color #e4e8ee
+.el-button
+  padding 10px 15px
+  // border-color black
+.el-button.el-button--small
+  padding 5px
+.el-message-box__btns>.el-button.el-button--small
+  padding 10px 15px
+.el-dialog
+  position absolute
+  top 50%
+  left 50%
+  margin 0 !important
+  max-height calc(100% - 30px)
+  max-width calc(100% - 30px)
+  transform translate(-50%, -50%)
+  display flex
+  flex-direction column
+  width 550px
+  @media (max-width:800px)
+    width 90%
+  >.el-dialog__body
+    overflow auto
+.el-dialog__header
+  background-color #fafafa
+  border 1px solid #e5e5e5
+  border-top-left-radius 4px
+  border-top-right-radius 4px
+  padding 10px
+.el-dialog__footer
+  border-top 1px solid #eee
+  text-align center
+  padding 10px
+  .el-button
+    width 90px
+  .el-button+.el-button
+    margin-left 90px
+  
+//菜单树
+// .el-menu
+//   background-color transparent
+//   border-right none
+//   color rgb(83, 138, 189)
+//   .el-menu-item
+//     color: #b9ddff
+//     padding-left 40px !important
+//     text-align left
+//     &:hover, &.is-active, i
+//       color #fff
+//   .el-submenu
+//     .el-submenu__title
+//       background-color rgba(255,255,255,0.1)
+//       color #fff
+//       font-size 16px
+//       padding-left 10px !important
+//       text-align left
+//       &:hover
+//         background-color rgba(255,255,255,0.2)
+//       i
+//         color #fff
+//         font-size 20px
+//     .el-menu-item.is-active
+//       background-color #26b2e7
+// .el-menu-item:focus, .el-menu-item:hover, .el-submenu__title:hover
+//   background-color rgba(0, 0, 0, 0.1)
+
+
+.el-message-box__btns
+  display flex
+  justify-content center
+  button
+    width 90px
+    &:nth-child(1)
+      margin-left 60px
+    &:nth-child(2)
+      order -1
+
+.el-loading-mask
+  z-index 2000
+
+.el-date-table
+  div
+    position relative
+
+.el-form-item
+  margin-bottom 12px
+.el-form-item__error
+  position relative
+
+.el-input__inner
+  height 32px
+  padding 0 10px
+  // border-color black
+.el-form-item__content, .el-form-item__label, .el-input__icon
+  line-height 32px
+.el-input-number
+  line-height 30px
+
+//修复el-time-picker
+.el-time-panel .el-scrollbar__wrap
+  overflow-x hidden
+.el-time-spinner__wrapper
+  height 188px
+
+
+.el-table img
+  display: block
+  margin: 3px auto
+  width: 100px !important
+
+.el-tree--highlight-current .el-tree-node.is-current>.el-tree-node__content
+  background-color #bdf
+
+.el-table .cell
+  padding: 10px
+
