@@ -1,7 +1,7 @@
 <template lang="pug">
   .page
     page-title 企业账号管理
-    crud(name="企业账号" :form='form'  ref='form' hasIndex  :staticTableData="staticTableData" :select-model-src="modelSrc" hasAdd hideEdit hideDelete :row-opers="rowOpers")      
+    crud(name="企业账号" :form='form'  ref='form' hasIndex :btns-shown="btns" :select-model-src="modelSrc" hasAdd hideEdit hideDelete :row-opers="rowOpers")      
 </template>
 <script>
 export default {
@@ -14,11 +14,11 @@ export default {
       modelSrc:{
         name:['公司名称']
       },
-      staticTableData:[
-        {name: '公司A',description: '这是公司A,位于kTV的东侧'},
-        {name: '公司B',description: '这是公司b,位于kTV的东侧'},
-        {name: '公司C',description: '这是公司c,位于kTV的东侧'}
-      ],
+      // staticTableData:[
+      //   {name: '公司A',description: '这是公司A,位于kTV的东侧'},
+      //   {name: '公司B',description: '这是公司b,位于kTV的东侧'},
+      //   {name: '公司C',description: '这是公司c,位于kTV的东侧'}
+      // ],
       rowOpers:[
         {
           text: "更改名称",

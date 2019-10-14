@@ -7,7 +7,7 @@
       el-tab-pane(label="二级分类" name="second")
         //- crud(name="商品二级分类" :form='form2'  ref='form2'  hasIndex  hasAdd hideSelect :class="activeName=='second'?'display':'none'")
     crud(name="商品一级分类" :form='form'  ref='form'  hasIndex  hasAdd hideSelect v-show="activeName=='first'")
-    crud(name="商品二级分类" :form='form2'  ref='form2'  hasIndex  hasAdd hideSelect v-show="activeName=='second'" :model-src="modelSrc")
+    crud(name="商品二级分类" :form='form2'  ref='form2'  hasIndex  hasAdd  v-show="activeName=='second'" :model-src="modelSrc")
       el-form(:inline="true")
         el-form-item(label="一级分类")
           el-select(v-model="form2.g_first_id")

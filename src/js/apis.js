@@ -37,6 +37,9 @@ const appApi = {
   部门领导职位:'/api/v1/department/query_department_position/',
   职位领导人员:'/department/multiple_position/',
 
+  //企业账号管理
+  企业账号:'/api/v1/client_module/corporate_m/',
+
   //菜单管理
   菜单管理:'/api/v1/system_module/system_menu/',
 

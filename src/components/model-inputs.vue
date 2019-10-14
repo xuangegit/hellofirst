@@ -45,10 +45,10 @@ export default {
   mounted() {
     console.log('model',this.model)
     for (var attr of this.model) {
-      // if (attr.tableOnly) continue
-      // if (!(attr.prop in this.form)) {
+      if (attr.tableOnly) continue
+      if (!(attr.prop in this.form)) {
         this.$set(this.form, attr.prop, '')
-      // }
+      }
     }
   },
   methods: {

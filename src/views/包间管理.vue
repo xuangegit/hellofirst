@@ -247,6 +247,8 @@ export default {
           aj('包间',param).then(d=>{
             console.log(d)
             this.$message.success(d.message||d.msg)
+            this.showModal = false
+            this.$refs.form.select()
           })
         }  
       })

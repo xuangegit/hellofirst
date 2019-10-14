@@ -1,7 +1,7 @@
 <template lang="pug">
   .page
     page-title 包间分类
-    crud(name="包间分类" :form='form'  ref='form'  hasIndex  :rowOpers="rowOpers" hideSelect hasAdd)
+    crud(name="包间分类" :form='form'  ref='form' :btns-shown="btns" hasIndex  :rowOpers="rowOpers" hideSelect hasAdd)
       
 </template>
 <script>

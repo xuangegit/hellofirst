@@ -6,14 +6,16 @@
         el-button(type="primary" icon="el-icon-plus" @click="add") 添加
     el-dialog.mdialog(:title='title' :visible.sync='showModal' :close-on-click-modal='false' width="750px" @close="dialogClose")
         el-form(label-width="150px" :model="formDep" :rules="rules" ref="formDep")
-          el-form-item(label="商品类型" prop="type")
-            el-select(v-model="formDep.type")
-              el-option-group(v-for="group in typeArray" :label="group.label" :key="group.value" :value="group.value")
-                el-option(v-for="item in group.levels" :label="item.label" :key="item.value" :value="item.value")
-          el-form-item(label="商品名称" prop="name")
-            el-input(v-model="formDep.name" maxLength="30" placeholder="请输入商品名称")
-          el-form-item(label="商品属性" prop="prop")
-            el-radio-group(v-model="formDep.prop")
+          el-form-item(label="一级类型" prop="g_fisrt_id")
+            el-select(v-model="formDep.g_fisrt_id")
+                el-option(v-for="item in typeFirst" :label="item.label" :key="item.value" :value="item.value")
+          el-form-item(label="二级类型" prop="g_second_id")
+            el-select(v-model="formDep.g_second_id")
+                el-option(v-for="item in typeSecond" :label="item.label" :key="item.value" :value="item.value")      
+          el-form-item(label="商品名称" prop="good_name")
+            el-input(v-model="formDep.good_name" maxLength="30" placeholder="请输入商品名称")
+          el-form-item(label="商品属性" prop="quantitative")
+            el-radio-group(v-model="formDep.quantitative")
               el-radio(:label="1") 可量化
               el-radio(:label="0") 不可量化
           el-form-item(label="是否参与暴击")
@@ -54,7 +56,7 @@
           el-form-item(label="商品规格信息" v-if="!istaocan")
             br
             .item-container(style="padding:10px;border:1px dotted #ccc")
-              el-row(v-for="(item,index) in formDep.specificationArray" :key="index")
+              el-row(v-for="(item,index) in formDep.goods_specification_list" :key="index")
                 el-col(:span="10")
                   el-form-item.level-item1(label="规格" prop="specification" label-width="50px")
                     el-select(v-model="item.specification")
@@ -106,12 +108,12 @@
             el-tag(:key="tag" v-for="tag in tags" closable :disable-transitions="false"  @close="handleClose(tag,0)")  {{tag}}   
             el-input(class="input-new-tag" v-if="inputVisible2" v-model="inputValue2" ref="saveTagInput2" @keyup.enter.native="handleInputConfirm(0)"  @blur="handleInputConfirm(0)")
             el-button(v-else class="button-new-tag" size="small" @click="showInput(0)" :disabled="tags.length>=5") 新增标签  
-          el-form-item(label="商品简介" prop="description")   
-            el-input(type="textarea" v-model="formDep.description" :autosize="{ minRows: 2, maxRows: 4}")
-          el-form-item(label="商品图片" prop="img")
+          el-form-item(label="商品简介" prop="introduction")   
+            el-input(type="textarea" v-model="formDep.introduction" :autosize="{ minRows: 2, maxRows: 4}")
+          el-form-item(label="商品图片" prop="cover_img")
            file-input(type="image" v-model="formDep.img" )
-          el-form-item(label="商品详情" prop="img")
-           multi-image-input(type="muti-image" v-model="formDep.details" )          
+          el-form-item(label="商品详情" prop="img_list")
+           multi-image-input(type="muti-image" v-model="formDep.img_list" )          
         .btns(slot='footer')   
           el-button(type='primary' @click='confirm') 确定
           el-button(@click='showModal = false') 取消      
@@ -133,9 +135,9 @@ export default {
         size:20
       },
       formDep:{
-        name: '',
+        good_name: '',
         type: 1,
-        prop:1,  //商品属性 (1:可量化，0：不可量化)
+        quantitative:1,  //商品属性 (1:可量化，0：不可量化)
         img:'',  //商品封面图
         price:'',
         costPrice: '',
@@ -148,7 +150,7 @@ export default {
         critRate:'', //暴击几率
         distributionTo:'',
         details:'',//商品详细(多张图)
-        specificationArray:[
+        goods_specification_list:[
           {specification:'',salePrice:''},
           {specification:'',salePrice:''}
         ],
@@ -175,88 +177,18 @@ export default {
         {label:'瓶',value:1},
         {label:'箱',value:2},
       ],
-      typeArray:[
-        {label: '种类1', value: 1,
-          levels:[{
-            value:1,label:'L1'
-          },{
-            value:2,label:'L2'
-          },
-          {
-            value:3,label:'L3'
-          },
-          {
-            value:4,label:'L4'
-          }]
-        },
-        {label: '种类2', value: 2,
-          levels:[{
-            value:1,label:'L1'
-          },{
-            value:2,label:'L2'
-          },
-          {
-            value:3,label:'L3'
-          },
-         ]
-        },
-        {label: '种类3', value: 3,
-          levels:[{
-            value:1,label:'L1'
-          },{
-            value:2,label:'L2'
-          },
-          {
-            value:3,label:'L3'
-          },
-          {
-            value:4,label:'L4'
-          }]
-        },
-        {label: '种类4', value: 4,levels:[{
-            value:1,label:'L1'
-          },{
-            value:2,label:'L2'
-          },
-          {
-            value:3,label:'L3'
-          },
-          {
-            value:4,label:'L4'
-          }]},
-        {label: '种类5', value: 5,levels:[{
-            value:1,label:'L1'
-          },{
-            value:2,label:'L2'
-          },
-          {
-            value:3,label:'L3'
-          },
-          {
-            value:4,label:'L4'
-          }]},
-          {label:'套餐',value:6,
-            levels:[{
-              value:7,label:'套餐1'
-            },{
-              value:8,label:'套餐2'
-            },
-            {
-              value:9,label:'套餐3'
-            },
-            {
-              value:10,label:'套餐4'
-            }]
-          }
-      ],
+      typeFirst:[],
+      typeSecond:[],
+      typeArray:[],
       staticTableData:[
          {
-          name: '有龙在天',
+          good_name: '有龙在天',
           type: 1,
           typeName:'套餐',
-          img:'http://bird-fisher.oss-cn-shanghai.aliyuncs.com/fisherOne/dyjx/video/201908/20190812135218f88794b1be29468ca04206151b7336eb.jpg',
+          cover_img:'http://bird-fisher.oss-cn-shanghai.aliyuncs.com/fisherOne/dyjx/video/201908/20190812135218f88794b1be29468ca04206151b7336eb.jpg',
           price:100,
           costPrice: 50,
+          quantitative:1,
           sales: 200,
           withOffset: 0,
           withIntegral:1,
@@ -294,10 +226,10 @@ export default {
         },
       ],
       rules:{
-        name:[{required:true,message:'请输入商品名称'}],
+        good_name:[{required:true,message:'请输入商品名称'}],
         type:[{required:true,message:'请选择商品类型'}],
-        prop:[{required:true,message:'必选'}],
-        img:[{required:true,message:'必选'}],
+        quantitative:[{required:true,message:'必选'}],
+        cover_img:[{required:true,message:'必选'}],
         crit:[{required:true,message:'必选'}],
         critRate:[{required:true,message:'必填'}],
         withIntegral:[{required:true,message:'必选'}],
@@ -318,10 +250,17 @@ export default {
     }
   },
   mounted(){
-
+    this.getType('商品一级分类','g_first_name',this.typeFirst)
+    this.getType('商品二级分类','g_second_name',this.typeSecond)
   },
   methods:{
-   
+    getType(url, key, lst){
+      this.$_app.get(url).then(d=>{
+        lst = d.data.ret.map(e=>{
+          return {value: e[key], id: e.id}
+        })
+      })
+    },
     add(){
       this.showModal = true
     },
@@ -333,13 +272,13 @@ export default {
     },
     addNext(type){
       if(type)
-        this.formDep.specificationArray.push({name:''})
+        this.formDep.goods_specification_list.push({name:''})
       else 
         this.formDep.mainCommodityArray.push({name:''})
     },
     deleteLast(type){
       if(type)
-        this.formDep.specificationArray.shift()
+        this.formDep.goods_specification_list.shift()
       else 
         this.formDep.mainCommodityArray.shift()  
     },

@@ -1,13 +1,12 @@
 export default {
   name:['公司名称','',{required:true,}],
-  totalGet:['累计获得金额','',{tableOnly:true}],
-  blance:['余额','',{tableOnly:true}],
-  reCharge:['充值金额','',{required:true}],
-  discount:['折扣','select',{required:true,hideInTable:true}],
-  discountName:['折扣',"",{tableOnly:true}],
-  given:['赠送金额','',{hideInTable:true}],
-  contactor:['联系人','',{required:true}],
-  contactorPhone:['联系方式','',{required:true}],
-  totalReCharge:['累计充值金额','',{tableOnly:true}],
-  totalGiven:['累计赠送金额','',{tableOnly:true}],
-}
+  totalGet:['累计获得金额','',{tableOnly:true}], //接口中暂无
+  account_balance:['余额','natural',{tableOnly:true}],
+  recharge_amount:['充值金额','natural',{required:true}],
+  discount:['折扣','natural',{required:true,}],
+  // discountName:['折扣',"",{tableOnly:true}],
+  gift_amount:['赠送金额','natural',{hideInTable:true,}],
+  contact:['联系人','',{required:true}],
+  contact_mobile:['联系方式','',{required:true}],
+  accumulated_recharge_amount	:['累计充值金额','',{tableOnly:true}],
+ hsnagosddafd
