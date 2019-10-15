@@ -293,6 +293,7 @@ export default {
     },
     showInfo(row) {
       if (this.handleInfo) {
+        // alert(1)
         this.infoForm = {}
         this.handleInfo(row).then(res => {
           this.infoForm = res

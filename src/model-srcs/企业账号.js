@@ -9,4 +9,4 @@ export default {
   contact:['联系人','',{required:true}],
   contact_mobile:['联系方式','',{required:true}],
   accumulated_recharge_amount	:['累计充值金额','',{tableOnly:true}],
- hsnagosddafd
+}
