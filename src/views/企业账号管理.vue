@@ -1,7 +1,7 @@
 <template lang="pug">
   .page
     page-title 企业账号管理
-    crud(name="企业账号" :form='form'  ref='form' hasIndex :btns-shown="btns" :select-model-src="modelSrc" hasAdd hideEdit hideDelete :row-opers="rowOpers")      
+    crud(name="企业账号" :form='form'  ref='form' hasIndex :btns-shown="btns" :select-model-src="modelSrc" hasAdd hideDelete :row-opers="rowOpers")      
 </template>
 <script>
 export default {
@@ -21,7 +21,7 @@ export default {
       // ],
       rowOpers:[
         {
-          text: "更改名称",
+          text: "充送比例",
           type: "primary",
           handler:row => {
             console.log(row)
@@ -51,7 +51,7 @@ export default {
           }
         },
         {
-          text: "停用",
+          text: "冻结",
           type: "danger",
           handler:row => {
             this.$confirm('确认停用？', {type: "warning"}).then(d => {
@@ -65,11 +65,11 @@ export default {
           }
         },
          {
-          text: "充值",
+          text: "赠送金额",
           type: "primary",
           handler:row => {
             console.log(row)
-            this.$prompt('请输入充值金额(元)').then(value=>{
+            this.$prompt('请输入赠送金额(元)').then(value=>{
               console.log('value',value)
               if(value.value)
                 this.$message.success('你输入了: '+ value.value)
@@ -78,7 +78,21 @@ export default {
             })
           }
         },
-          {
+        {
+          text: "折扣",
+          type: "primary",
+          handler:row => {
+            console.log(row)
+            this.$prompt('请输入折扣').then(value=>{
+              console.log('value',value)
+              if(value.value)
+                this.$message.success('你输入了: '+ value.value)
+            }).catch(()=>{
+
+            })
+          }
+        },
+        {
           text: "充值订单",
           type: "success",
           handler:row => {

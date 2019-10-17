@@ -9,11 +9,13 @@ export default {
     return {
       form:{
         size: 20,
-        pg: 1
+        pg: 1,
+        companyId:'',
+        name:''
       },
        modelSrc:{
-        companyId:['公司名称','select',{required:true,mapper:{1:'公司A',2:'公司B',3:'公司C',4:'公司D',}}],
-        // name:['员工姓名']
+        companyId:['公司名称','select',{emptyOption:'全部',mapper:{1:'公司A',2:'公司B',3:'公司C',4:'公司D',}}],
+        name:['员工姓名']
       },
       staticTableData:[
         {name: '员工A',cost: '100',bindTime:'2019-8-12'},
@@ -29,14 +31,6 @@ export default {
             this.$router.push({name:'消费明细'})
           }
         },
-        {
-          text:'充值明细',
-          type:'success',
-          handler:row=>{
-            console.log(row)
-            this.$router.push({name:'充值明细'})
-          }
-        }
       ],
     }
   }

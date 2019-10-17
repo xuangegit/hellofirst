@@ -11,7 +11,7 @@
       //- chrome浏览器会记住密码并填充，加一个隐藏input，让填充不引响原本的弹框
       el-date-picker(v-if='attr.type=="date" && !(attr.multiInsert && isInsert)' :clearable='attr.isClear' v-model='form[attr.prop]' placeholder="选择日期" value-format='yyyy-MM-dd')
       el-date-picker(v-if='attr.type=="month" && !(attr.multiInsert && isInsert)' type="month" v-model='form[attr.prop]' placeholder="选择日期" value-format='yyyy-MM')
-      el-date-picker(v-if='attr.type=="daterange" && attr.multiInsert && isInsert' v-model='form[attr.prop]'  start-placeholder="开始日期" end-placeholder="结束日期" value-format='yyyy-MM-dd' type='daterange')
+      el-date-picker(v-if='attr.type=="daterange"' v-model='form[attr.prop]'  start-placeholder="开始日期" end-placeholder="结束日期" value-format='yyyy-MM-dd' type='daterange')
       el-time-picker(v-if='attr.type=="time"' v-model='form[attr.prop]' placeholder="选择时间" value-format='HH:mm' format='HH:mm' :is-range='attr.isRange')
       el-input(v-if='attr.type=="textarea"' v-model='form[attr.prop]' type='textarea' :rows='3' :maxlength='attr.maxLength')
       viewer(v-if='attr.type == "imageShow"' :images='form[attr.prop]')

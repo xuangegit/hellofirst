@@ -2,7 +2,7 @@
   <div class="page">
     <header>
       <div class="header-pic">
-        <!-- <img src="../assets/logo.png"> -->
+        <img src="../assets/logo.png">
         <!-- ktv管理 -->
       </div>
     </header>

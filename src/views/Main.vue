@@ -1,10 +1,8 @@
 <template lang='pug'>
-//-
-  @file 主页框架
-  @author 李小龙
-  @date 2018/8/16
 .main(style='height:100%;')
   header#top-nav
+    div
+      img(src="../assets/logo.png" style="text-align:left")
     //- h2(style="position:absolute;text-align:center;width:100%;top:10px") 后台管理系统
     div(style='display:inline-block;margin-right:2%;') 
       | {{username}}
