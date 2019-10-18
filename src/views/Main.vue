@@ -7,8 +7,8 @@
     div(style='display:inline-block;margin-right:2%;') 
       | {{username}}
     img(src='../assets/head portrait-default.png', style='display:inline-block;vertical-align:middle;margin-right:30px;')
-    i.iconfont.icon-Passwordmodificatio(@click='$router.push({name: "修改密码"})')
-    i.iconfont.icon-dropout(@click='logout()')
+    i.iconfont.icon-password_icon(@click='$router.push({name: "修改密码"})')
+    i.iconfont.icon-app_icons--(@click='logout()')
   nav
     el-menu(:router='true' unique-opened)
       template(v-for='(mainMenu, index) in leftMenu')
