@@ -16,9 +16,9 @@
         i.el-icon-download
         |  导出
       slot(name='fr')
-      el-button.fr(type='primary' @click='showAdd' v-if='hasAdd && btnsShown.includes("添加")')
+      el-button.fr(type='primary' @click='showAdd' v-if='hasAdd &&(btnsShown.includes("添加")||btnsShown.includes("新增"))')
         i.el-icon-plus
-        |  添加
+        |  {{btns.includes("添加")? '添加':'新增'}}
       slot(name='se')
     //- .column-select
     //-     span(style="margin-right:10px") 隐藏

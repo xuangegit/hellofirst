@@ -1,7 +1,7 @@
 <template lang="pug">
   .page
     page-title 单位管理
-    crud(name="单位" :form='form'  ref='form'  hasIndex  hasAdd :select-model-src="selectModelSrc" )
+    crud(name="单位" :form='form' :btns-shown="btns" ref='form'  hasIndex  hasAdd :select-model-src="selectModelSrc" )
       
 </template>
 <script>

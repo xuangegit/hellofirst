@@ -1,7 +1,7 @@
 <template lang="pug">
   .page
     page-title 员工管理
-    crud(name="员工" :form='form' ref='form' hasIndex hasInfo hideEdit :row-opers="rowOpers" hideDelete :select-model-src="selectModelSrc")
+    crud(name="员工" :form='form' :btns-shown="btns" ref='form' hasIndex hasInfo hideEdit :row-opers="rowOpers" hideDelete :select-model-src="selectModelSrc")
       el-form(:inline="true")
         el-form-item(label="部门")
           el-select(v-model="form.department_id")
@@ -12,7 +12,7 @@
             el-option(label="全部" value="")
             el-option(v-for="item in positionArraySelect" :key="item.id" :label="item.name" :value="item.id")    
       .fr(slot="fr")
-          el-button(type="primary" icon="el-icon-plus" @click="add") 添加
+          el-button(type="primary" icon="el-icon-plus" @click="add" v-if="btns.includes('添加')||btns.includes('新增')") {{btns.includes('添加')?'添加':'新增'}}
     el-dialog.mdialog(:title='title' :visible.sync='showModal' :close-on-click-modal='false' @close="dialogClose")
       el-form(label-width="110px" :model="formDep" :rules="rules" ref="formDep")
         el-form-item(label="所属部门" prop="department_id")

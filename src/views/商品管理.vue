@@ -1,9 +1,9 @@
 <template lang="pug">
   .page
     page-title 商品管理
-    crud(name="商品" :form='form' ref='form' :row-opers='rowOpers' hasIndex :staticTableData="staticTableData" hideDelete hideOper)
+    crud(name="商品" :btns-shown="btns" :form='form' ref='form' :row-opers='rowOpers' hasIndex :staticTableData="staticTableData" hideDelete hideOper)
       .fr(slot="fr")
-        el-button(type="primary" icon="el-icon-plus" @click="add") 添加
+        el-button(type="primary" icon="el-icon-plus" @click="add" v-if="btns.includes('添加')||btns.includes('新增')") {{btns.includes('添加')?'添加':'新增'}}
     el-dialog.mdialog(:title='title' :visible.sync='showModal' :close-on-click-modal='false' width="750px" @close="dialogClose")
         el-form(label-width="150px" :model="formDep" :rules="rules" ref="formDep")
           el-form-item(label="一级类型" prop="g_fisrt_id")

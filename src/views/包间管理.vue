@@ -1,7 +1,7 @@
 <template lang="pug">
   .page
     page-title 包间管理
-    crud(name="包间" :form='form'  ref='form'  hasIndex :row-opers='rowOpers' hideOper hideEdit hideDelete)
+    crud(name="包间" :form='form'  ref='form' :btns-shown="btns" hasIndex :row-opers='rowOpers' hideOper hideEdit hideDelete)
       el-form(inline :model="form")
         el-form-item(label='包间区域')
           el-select(v-model='form.partition_id')
@@ -12,7 +12,7 @@
             el-option(label="全部" value='' key="")
             el-option(v-for="item in typeArray" :label="item.label" :key="item.value" :value="item.value")
       .fr(slot="fr")
-        el-button(type="primary" icon="el-icon-plus" @click="add") 添加
+        el-button(type="primary" icon="el-icon-plus" v-if="btns.includes('新增')||btns.includes('添加')" @click="add") {{btns.includes('新增')?'新增':'添加'}}
 
       el-dialog.mdialog(:title='title' :visible.sync='showModal' :close-on-click-modal='false' width="800px" @close="dialogClose")
         el-form(label-width="110px" :model="formDep" :rules="rules" ref="formDep")

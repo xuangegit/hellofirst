@@ -16,7 +16,9 @@
     >
       <template slot="fr">
         <el-button class="fr"  type="primary" @click="showAdd">
-          <i class="el-icon-plus">添加</i>
+          <i class="el-icon-plus" v-if="btns.includes('添加')||btns.includes('新增')">
+            {{btns.includes('添加')?'添加':'新增'}}
+          </i>
         </el-button>
       </template>
     </crud>
@@ -125,16 +127,29 @@ export default {
         callback() 
       }
     }
-    // var validatePass = (rule, value, callback) => {
-    //   var reg = /^[1][3,4,5,6,7,8,9][0-9]{9}$/
-    //   if (value === '') {
-    //     callback(new Error('请输入联系'))
-    //   } else if(!reg.test(value)){
-    //     callback(new Error('手机号码格式不正确'))
-    //   } else {
-    //     callback() 
-    //   }
-    // }
+    var validatePass = (rule, value, callback) => {
+      var  reg = /^[a-z A-Z 0-9]{1}[\w~'!@#￥$%^&*()-+_=:]{5,15}$/
+      if (value === '') {
+        callback(new Error('请输入密码'))
+      } else if(!reg.test(value)){
+        callback(new Error('格式不正确，请输入以数字或者字母开头，6-16为字符'))
+      } else {
+        callback() 
+      }
+    }
+     var confirmPass = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('请再次输入密码'))
+      } else if(this.addForm.password!=value){
+        if(this.addForm.password==''){
+          callback()
+        } else {
+          callback(new Error('两次密码输入不一致'))
+        }     
+      } else {
+        callback() 
+      }
+    }
     return {
       roleType: true,
       insertDialogShow: false,
@@ -147,11 +162,11 @@ export default {
         role_id: [{ required: true, message: "必填" }],
         status: [{ required: true, message: "必填" }],
         password: [
-          { required: true, message:'必填' },
+          { required: true, validator:validatePass },
           { min: 6, max: 16, message: "密码长度6至16位" }
         ],
         confirm_password: [
-          { required: true, message: "必填" },
+          { required: true,validator:confirmPass },
           { min: 6, max: 16, message: "密码长度6至16位" }
         ]
       },
@@ -263,6 +278,8 @@ export default {
     window.vm = this
     // if(this.$_app.getRole() === 1) this.getRole(); //只用超级管理员有这个权限
     this.getRole()
+    // var reg = /^[a-z A-Z 0-9]{1}[\w~'!@#￥$%^&*()-+_=:]{5,15}$/
+    // console.log(reg.test('12ds555*'))
   },
   methods: {
     change(e) {

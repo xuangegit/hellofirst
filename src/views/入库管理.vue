@@ -1,9 +1,9 @@
 <template lang="pug">
   .page
     page-title 入库管理
-    crud(name="入库" :static-table-data="staticTableData" :form="form" :select-model-src="modelSrc" :row-opers="rowOpers")
+    crud(name="入库" :static-table-data="staticTableData" :btns-shown="btns" :form="form" :select-model-src="modelSrc" :row-opers="rowOpers")
       .fr(slot="fr")
-          el-button(type="primary" icon="el-icon-plus" @click="add") 添加
+          el-button(type="primary" icon="el-icon-plus" @click="add" v-if="btns.includes('添加')|| btns.includes('新增')")  {{btns.includes('添加')?'添加':'新增'}}
     el-dialog.mdialog(:title='title' :visible.sync='showModal' :close-on-click-modal='false' @close="dialogClose" width="1000px")
       el-form(label-width="80px" :model="formDep" :rules="rules" ref="formDep" inline)
         el-form-item(label="入库时间" prop="entry_time")
@@ -34,8 +34,6 @@
       .btns(slot='footer')
         el-button(type='primary' @click='confirm') 确定
         el-button(@click='showModal = false') 取消  
-      el-dialog.mdialog(:title='title' :visible.sync='showModal' :close-on-click-modal='false' @close="dialogClose")  
-</template>  
 </template>
 <script>
 import tableEdit from '../components/table-edit'

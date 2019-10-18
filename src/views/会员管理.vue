@@ -1,15 +1,15 @@
 <template lang="pug">
     .page
       page-title 会员管理
-      crud(name="会员" :form='form'  ref='form' :row-opers='rowOpers' hasIndex   hideDelete hideEdit  hideOper :model-src="modelSrc")
+      crud(name="会员" :form='form'  ref='form' :btns-shown="btns" :row-opers='rowOpers' hasIndex   hideDelete hideEdit  hideOper :model-src="modelSrc")
         el-form(inline :model="form")
           el-form-item(label='会员种类')
             el-select(v-model='form.member_type_id')
               el-option(label="全部" value='' key="")
               el-option(v-for="item in typeSelect" :label="item.label" :key="item.value" :value="item.value")
         .fr(slot="fr")
-          el-button(type="primary" icon="el-icon-sort-up" @click="sort") 排序
-          el-button(type="primary" icon="el-icon-plus" @click="add") 添加         
+          el-button(type="primary" v-if="btns.includes('排序')" icon="el-icon-sort-up" @click="sort") 排序
+          el-button(type="primary" v-if="btns.includes('添加')||btns.includes('新增')" icon="el-icon-plus" @click="add") {{btns.includes('添加')?'添加':'新增'}}        
       el-dialog.mdialog(:title='title' :visible.sync='showModal' :close-on-click-modal='false' @close="dialogClose")
         el-form(label-width="110px" :model="formDep" :rules="rules" ref="formDep")
           el-form-item(label="会员昵称" prop="nick_name")

@@ -1,7 +1,7 @@
 <template lang="pug">
   .page
     page-title 职位管理
-    crud(name="职位" :form='form'  ref='form' :model-src="modelSrc"  hasIndex   hasAdd :row-opers="rowOpers" :handle-table-data="handleTableData")
+    crud(name="职位" :form='form' :btns-shown="btns" ref='form' :model-src="modelSrc"  hasIndex   hasAdd :row-opers="rowOpers" :handle-table-data="handleTableData")
       el-form(:inline="true")
         el-form-item(label="部门")
           el-select(v-model="form.department_id")

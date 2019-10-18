@@ -1,9 +1,9 @@
 <template lang="pug">
   .page
     page-title 场次管理
-    crud(name="场次" :form='form'  ref='form'  hasIndex  :staticTableData="staticTableData" :row-opers="rowOpers" hideSelect hideOper)
+    crud(name="场次" :form='form'  ref='form' :btns-shown="btns" hasIndex  :staticTableData="staticTableData" :row-opers="rowOpers" hideSelect hideOper)
       .fr(slot="fr")
-        el-button(type="primary" icon="el-icon-plus" @click="add") 添加
+        el-button(type="primary" icon="el-icon-plus" @click="add" v-if="btns.includes('新增')|| btns.includes('添加')") {{btns.includes('新增')?'新增':'添加'}}
     el-dialog.mdialog(:title='title' :visible.sync='showModal' :close-on-click-modal='false' @close="dialogClose")
         el-form(label-width="130px" :model="formDep" :rules="rules" ref="formDep")
           el-form-item(label="场次名称" prop="name")

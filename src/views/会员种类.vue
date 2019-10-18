@@ -1,9 +1,9 @@
 <template lang="pug">
   .page
     page-title 会员种类
-    crud(name="会员种类" :form='form'  ref='form' :row-opers='rowOpers' hasIndex hideOper  hideDelete)
+    crud(name="会员种类" :form='form'  ref='form' :btns-shown="btns" :row-opers='rowOpers' hasIndex hideOper  hideDelete)
       .fr(slot="fr")
-        el-button(type="primary" icon="el-icon-plus" @click="add") 添加
+        el-button(type="primary" icon="el-icon-plus" @click="add" v-if="btns.includes('新增')||btns.includes('添加')") {{btns.includes('新增')? '新增':'添加'}}
     el-dialog.mdialog(:title='title' :visible.sync='showModal' :close-on-click-modal='false' width="700px" @close="dialogClose")
         el-form(label-width="150px" :model="formDep" :rules="rules" ref="formDep")
           el-form-item(label="会员种类名称" prop="member_type_name")
