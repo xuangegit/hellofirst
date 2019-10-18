@@ -2,11 +2,11 @@
   <div class="page">
     <header>
       <div class="header-pic">
-        <img src="../assets/logo.png">
+        <img src="../assets/logo.png" height="56px">
         <!-- ktv管理 -->
       </div>
     </header>
-    <article>
+    <article class="login_bg">
       <div class="login-pic">
       </div>
       <div class="login-box-background">
@@ -464,8 +464,12 @@ export default {
 .box-none{
   width 40px
 }
+
+.login_bg{
+   background url(../assets/login_bg.jpg) no-repeat center/cover
+}
 .login-pic{
-  // background url(../assets/login_bg.png) no-repeat center/contain
+  // background url(../assets/login_bg.jpg) no-repeat center/cover
   min-width 373px
   min-height 322px
 }

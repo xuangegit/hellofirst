@@ -1,8 +1,8 @@
 <template lang='pug'>
 .main(style='height:100%;')
   header#top-nav
-    div
-      img(src="../assets/logo.png" style="text-align:left")
+    div(style="flex:1;padding-left:50px")
+      img(src="../assets/logo.png" style="text-align:left;height:50px")
     //- h2(style="position:absolute;text-align:center;width:100%;top:10px") 后台管理系统
     div(style='display:inline-block;margin-right:2%;') 
       | {{username}}
@@ -85,7 +85,8 @@ export default {
 
 <style lang='stylus' scoped>
 header#top-nav
-  // background: url(../assets/logo.png) 5% center no-repeat, #fff
+  background: url(../assets/logo_bg.png) 80% center no-repeat, #fff
+  background-size auto 50px
   border-bottom 1px solid #eee
   color #666
   position relative
