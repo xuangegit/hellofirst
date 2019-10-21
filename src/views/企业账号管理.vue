@@ -1,7 +1,18 @@
 <template lang="pug">
   .page
     page-title 企业账号管理
-    crud(name="企业账号" :form='form'  ref='form' hasIndex :btns-shown="btns" :select-model-src="modelSrc" hasAdd hideDelete :row-opers="rowOpers")      
+    crud(name="企业账号" :form='form'  ref='form' hasIndex :btns-shown="btns" :select-model-src="modelSrc" hasAdd hideDelete :row-opers="rowOpers")
+    el-dialog.mdialog(title='金额管理' :visible.sync='showModal' :close-on-click-modal='false' @close="dialogClose")
+      el-form(:model="moneyForm" label-width="100px" ref="moneyForm")
+        el-form-item(label="充值/扣除")
+          el-radio-group(v-model="moneyForm.type")
+            el-radio(:label="1") 充值
+            el-radio(:label="0") 扣除
+        el-form-item(prop="money" label="金额")
+          el-input-number(v-model="moneyForm.money" :min="0")
+      .btns(slot='footer')
+          el-button(type='primary' @click='confirm') 确定
+          el-button(@click='showModal = false') 取消                    
 </template>
 <script>
 export default {
@@ -11,6 +22,11 @@ export default {
         size: 20,
         pg: 1
       },
+      showModal:false,
+      moneyForm:{
+        type:1,
+        money:''
+      },      
       modelSrc:{
         name:['公司名称']
       },
@@ -25,7 +41,7 @@ export default {
           type: "primary",
           handler:row => {
             console.log(row)
-            this.$prompt('请输入名称').then(value=>{
+            this.$prompt('请输入充送比例').then(value=>{
               console.log('value',value)
               if(value.value)
                 this.$message.success('你输入了: '+ value.value)
@@ -65,17 +81,10 @@ export default {
           }
         },
          {
-          text: "赠送金额",
+          text: "金额管理",
           type: "primary",
           handler:row => {
-            console.log(row)
-            this.$prompt('请输入赠送金额(元)').then(value=>{
-              console.log('value',value)
-              if(value.value)
-                this.$message.success('你输入了: '+ value.value)
-            }).catch(()=>{
-
-            })
+           this.showModal = true 
           }
         },
         {
@@ -101,6 +110,14 @@ export default {
           }
         },
       ]
+    }
+  },
+  methods:{
+    confirm(){
+
+    },
+    dialogClose(){
+      this.$refs.moneyForm.resetFields()
     }
   }
 }

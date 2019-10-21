@@ -53,7 +53,7 @@ export default {
     }
   },
   mounted() {
-    this.pwdForm.username = JSON.parse(sessionStorage.loginInfo).username
+    this.pwdForm.username = JSON.parse(sessionStorage.loginInfo).name
     console.log(this.pwdForm.username)
   },
   methods: {
@@ -75,11 +75,11 @@ export default {
             app
               .get('resetPassword', forms, this.$el)
               .then(d => {
-                this.$message.success(d.message || d.responseMessage)
+                this.$message.success(d.message || d.msg)
                 this.$refs.changePwd.resetFields()
               })
               .catch(d => {
-                this.$message.warning(d.message || d.responseMessage)
+                this.$message.warning(d.message || d.msg)
               })
           }
         }

@@ -1,8 +1,7 @@
 <template lang="pug">
   .page
     page-title 部门管理
-    crud(name="部门" :form='form'  ref='form' :btns-shown="btns" hasIndex  hideSelect hasAdd) 
-      
+    crud(name="部门" :form='form'  ref='form' :btns-shown="btns" hasIndex  hideSelect hasAdd)  
 </template>
 <script>
 export default {

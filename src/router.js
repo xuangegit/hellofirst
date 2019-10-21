@@ -6,6 +6,7 @@ const Main = () => import('@/views/Main')
 Vue.use(Router)
 
 var pages = [
+  '修改密码',
   '会员管理',
   '会员种类',
   '包间管理',

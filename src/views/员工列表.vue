@@ -1,7 +1,7 @@
 <template lang="pug">
   .page
     page-title 员工列表
-    crud(name="员工列表" :form='form'  ref='form'  hasIndex  :staticTableData="staticTableData" :select-model-src="modelSrc" hideOper hideDelete :row-opers="rowOpers")    
+    crud(name="员工列表" :form='form'  ref='form' :btns-shown="btns" hasIndex  :staticTableData="staticTableData" :select-model-src="modelSrc" hasAdd :row-opers="rowOpers")    
 </template>
 <script>
 export default {

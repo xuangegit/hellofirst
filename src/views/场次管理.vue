@@ -26,6 +26,9 @@
                 el-select(v-model="formDep.selectVal" filterable  @change="selectChanged" clearable placeholder="请选择" )
                   el-option(label="当天" :value="0")
                   el-option(label="随时" :value="1")
+            .row(v-if="formDep.selectVal==1")
+              el-form-item(prop="days_in_advance" label-width="130px") 
+                el-input(v-model="formDep.days_in_advance" placeholder="请输入预约可提前天数")    
             .row(v-if="formDep.selectVal==0")
               //- el-form-item(label="预约时间" v-if="formDep.selectVal===0")
               //-   el-time-picker(v-model="formDep.appointmentTime" :is-range="true" value-format='HH:mm' format='HH:mm' start-placeholder="开始时间" end-placeholder="结束时间" :picker-options="{selectableRange:'00:00:00 -'+(formDep.end_time?formDep.end_time+':00':'23:59:59')}")
@@ -76,6 +79,7 @@ export default {
       },
       start_time:'',
       formDep:{
+        days_in_advance:'',
         is_end_today:1,
         name:'',
         start_time:"",
@@ -98,10 +102,10 @@ export default {
         {
           name:'黄金场',
           time:"10:00 - 14:00",
-          subscriptionTime:"10:00 - 14:00",
-          fullPayTime:"10:00 - 14:00",
-          gratisTime:"10:00 - 14:00",
-          orderTime:"10:00 - 14:00",
+          // subscriptionTime:"10:00 - 14:00",
+          // fullPayTime:"10:00 - 14:00",
+          // gratisTime:"10:00 - 14:00",
+          // orderTime:"10:00 - 14:00",
         }
       ],
        rules:{
@@ -110,6 +114,7 @@ export default {
         end_time:[{required:true, message: '请输入场次结束时间'}],
         is_end_today:[{required:true,message:'请选择'}],
         gratisTime:[{required:true,message:'请输入免费预约时间'}],
+        days_in_advance:[{required:true,message:'请输入预约可天前天数'}]
         // other:[{required:true, validator:otherValidator,trigger:'change'}],
         // subscriptionTime:[{required:true, message: '请输入订金预约时间'}],
         // subscription:[{required:true, message: '请输入订金金额'}],
