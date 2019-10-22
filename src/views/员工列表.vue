@@ -1,21 +1,30 @@
 <template lang="pug">
   .page
     page-title 员工列表
-    crud(name="员工列表" :form='form'  ref='form' :btns-shown="btns" hasIndex  :staticTableData="staticTableData" :select-model-src="modelSrc" hasAdd :row-opers="rowOpers")    
+    crud(name="员工列表" :form='form'  ref='form' :btns-shown="btns" hasIndex  hasAdd :row-opers="rowOpers")
+      el-form(:model="form" inline)
+        el-form-item(label="公司名称")
+          el-select(v-model="form.corporate_customer_id")
+            el-option(label="全部" value="")
+            el-option(v-for="item in companyArray" :label="item.name" :key="item.id" :value="item.id")  
+        el-form-item(label="员工姓名")
+          el-input(v-model="form.name")
+        el-form-item(label="员工电话")
+          el-input(v-model="form.mobile")          
 </template>
 <script>
+import modelSrc from '../model-srcs/员工列表.js'
 export default {
   data(){
     return {
+      companyArray:[],
+      modelSrc,
       form:{
         size: 20,
         pg: 1,
-        companyId:'',
-        name:''
-      },
-       modelSrc:{
-        companyId:['公司名称','select',{emptyOption:'全部',mapper:{1:'公司A',2:'公司B',3:'公司C',4:'公司D',}}],
-        name:['员工姓名']
+        name:'',
+        mobile:'',
+        corporate_customer_id:''
       },
       staticTableData:[
         {name: '员工A',cost: '100',bindTime:'2019-8-12'},
@@ -33,6 +42,15 @@ export default {
         },
       ],
     }
-  }
+  },
+  beforeMount(){
+    this.$_app.get('企业账号').then(d=>{
+      console.log('企业账号',d)
+      this.companyArray=d.data.ret
+      d.data.ret.forEach(e=>{
+        modelSrc.corporate_customer_id[2].mapper[e.id]=e.name
+      })
+    })
+  },
 }
 </script>

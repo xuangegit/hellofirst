@@ -67,13 +67,15 @@ export default {
             this.$message.warning('两次输入的密码不一致！')
           } else {
             let forms = {}
-            forms.id = JSON.parse(sessionStorage.loginInfo).id
-            forms.orginPassword = this.getMd5(this.pwdForm.password)
-            forms.newPassword = this.getMd5(this.pwdForm.newPassword)
+            // forms.id = JSON.parse(sessionStorage.loginInfo).id
+            // forms.orginPassword = this.getMd5(this.pwdForm.password)
+            // forms.newPassword = this.getMd5(this.pwdForm.newPassword)
             // debugger
-            // forms.username = JSON.parse(sessionStorage.loginInfo).username
+            forms.old_password = this.pwdForm.password
+            forms.new_password = this.pwdForm.newPassword
+            forms.re_new_password = this.pwdForm.newPasswordConfirm
             app
-              .get('resetPassword', forms, this.$el)
+              .post('resetPassword', forms, this.$el)
               .then(d => {
                 this.$message.success(d.message || d.msg)
                 this.$refs.changePwd.resetFields()

@@ -4,6 +4,7 @@ const appApi = {
   //登录登出
   loginIn:'/api/v1/data_module/login/',
   loginOut:'/api/v1/data_module/login_out/',
+  resetPassword:'/api/v1/data_module/change_password/',
 
 
   
@@ -39,6 +40,7 @@ const appApi = {
 
   //企业账号管理
   企业账号:'/api/v1/client_module/corporate_m/',
+  员工列表:'/api/v1/client_module/company_employee/',
 
   //菜单管理
   菜单管理:'/api/v1/system_module/system_menu/',
