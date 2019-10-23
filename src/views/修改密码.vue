@@ -27,6 +27,16 @@ import { MD5Encode } from '../js/NewMD5Encrypt'
 
 export default {
   data() {
+     var validatePass = (rule, value, callback) => {
+      var  reg = /^[a-z A-Z 0-9]{1}[\w~'!@#￥$%^&*()-+_=:]{5,15}$/
+      if (value === '') {
+        callback(new Error('请输入密码'))
+      } else if(!reg.test(value)){
+        callback(new Error('格式不正确，请输入以数字或者字母开头，6-16为字符'))
+      } else {
+        callback() 
+      }
+    }
     return {
       username: '',
       password: '',
@@ -42,7 +52,7 @@ export default {
       pwdRules: {
         password: { required: true, message: '必填' },
         newPassword: [
-          { required: true, message: '必填' },
+          { required: true, validator: validatePass ,trigger:'blur'},
           { min: 6, max: 16, message: '密码长度6至16位' }
         ],
         newPasswordConfirm: [

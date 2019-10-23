@@ -44,6 +44,9 @@ export default {
     }
   },
   beforeMount(){
+    if(!!this.$route.params.id) {
+      this.form.corporate_customer_id = this.$route.params.id
+    }
     this.$_app.get('企业账号').then(d=>{
       console.log('企业账号',d)
       this.companyArray=d.data.ret

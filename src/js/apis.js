@@ -40,6 +40,7 @@ const appApi = {
 
   //企业账号管理
   企业账号:'/api/v1/client_module/corporate_m/',
+  // 企业账号冻结或启用:'/api/v1/client_module/corporate_m/',
   员工列表:'/api/v1/client_module/company_employee/',
 
   //菜单管理

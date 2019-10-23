@@ -63,20 +63,37 @@ export default {
           type: "primary",
           handler:row => {
             console.log(row)
+            this.$router.push({name:'员工列表',params:{id: row.id}})
             
           }
         },
         {
           text: "冻结",
           type: "danger",
+          hide:row=>{
+            return row.status==2
+          },
           handler:row => {
-            this.$confirm('确认停用？', {type: "warning"}).then(d => {
-            return new Promise((resolve,reject)=>{
-              resolve('确认停用')
-            })
+            this.$confirm('确认冻结', {type: "warning"}).then(()=> {
+             return this.$_app.delete('企业账号',{id: row.id})
           }).then(d => {
-            this.$message.success(d)
-            // this.$refs.tablePer.select()
+            this.$message.success(d.message||d.msg)
+            this.$refs.form.select()
+          })
+          }
+        },
+         {
+          text: "启用",
+          type: "success",
+          hide:row=>{
+            return row.status==1
+          },
+           handler:row => {
+            this.$confirm('确定启用？', {type: "warning"}).then(()=> {
+             return this.$_app.delete('企业账号',{id: row.id})
+          }).then(d => {
+            this.$message.success(d.message||d.msg)
+            this.$refs.form.select()
           })
           }
         },

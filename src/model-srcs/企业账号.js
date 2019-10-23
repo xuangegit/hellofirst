@@ -11,5 +11,5 @@ export default {
   contact:['联系人','',{required:true}],
   contact_mobile:['联系方式','',{required:true}],
   company_address:['公司地址','',{required:true}],
-  remark:['备注','textarea',{required: true}]
+  remarks:['备注','textarea',{required: true}]
 }

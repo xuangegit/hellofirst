@@ -354,9 +354,10 @@ export default {
       this.$refs[formName].validate(valid => {
         if (valid) {
           if (this.pwdForm.password == this.pwdForm.confirm_password) {
-            // let form = this.pwdForm;
-            //delete form.password;
-            app.post("重置密码", this.pwdForm, this.$el).then(d => {
+            var forms=JSON.parse(JSON.stringify(this.pwdForm))
+            forms.newpassword=forms.password
+            delete forms.password
+            app.post("重置密码", forms, this.$el).then(d => {
               this.$message.success(d.message || d.msg);
               this.operDialogShow = false;
             });
