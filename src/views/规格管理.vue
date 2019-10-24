@@ -3,7 +3,7 @@
     page-title 规格管理
     crud(name="规格" :form="form" ref="form" :btns-shown="btns" hasIndex :select-model-src="selectModelSrc" :model-src="modelSrc" hideOper :row-opers="rowOpers")
       .fr(slot="fr")
-        el-button(type="primary" icon="el-icon-plus" @click="btns.includes('添加')||btns.includes('新增')") {{btns.includes('添加')? '添加': '新增'}}
+        el-button(type="primary" icon="el-icon-plus"  @click="add" v-if="btns.includes('添加')||btns.includes('新增')") {{btns.includes('添加')? '添加': '新增'}}
     el-dialog.mdialog(:title='title' :visible.sync='showModal' :close-on-click-modal='false' width="700px" @close=" dialogClose")
       el-form(label-width="100px" :model="formDep" :rules="rules" ref="formDep")
         el-form-item(label="规格名称" prop="name")
