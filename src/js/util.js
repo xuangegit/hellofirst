@@ -33,7 +33,15 @@ export function md5Up(val) {
   var str3 = arr2.join('')
   return str3
 }
+export function getRandom(range,type){
 
+  let digital = Math.random()*range
+  console.log('Math.floor(digital)',Math.floor(digital))
+  if(type)
+    return Math.floor(digital) // 0  -  range-1
+  else 
+    return Math.ceil(digital)  // 0  -  range 
+}
 //时间日期相关
 export function formatDate(d, format) {
   var o = {

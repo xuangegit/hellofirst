@@ -45,7 +45,7 @@ export default {
       this.$emit('change', val)
     },
     value(val) {
-      console.log('val',typeof val)
+      console.log('val', val)
       if (val == '' || val == null) {
         this.fileList = []
       } else {

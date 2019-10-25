@@ -14,19 +14,22 @@
                 el-option(v-for="item in typeSecond" :label="item.label" :key="item.value" :value="item.value")      
           el-form-item(label="商品名称" prop="good_name")
             el-input(v-model="formDep.good_name" maxLength="30" placeholder="请输入商品名称")
-          el-form-item(label="商品属性" prop="quantitative")
-            el-radio-group(v-model="formDep.quantitative")
-              el-radio(:label="1") 可量化
-              el-radio(:label="0") 不可量化
-          el-form-item(label="是否参与暴击")
-            el-col(:span="10")
-              el-form-item(label="" prop="crit")
-                el-radio-group(v-model="formDep.crit")
-                  el-radio(:label="1") 是
-                  el-radio(:label="0") 否
-            el-col(:span="14" v-if="formDep.crit==1")          
-              el-form-item(label="暴击几率" prop="critRate")
-                el-input(v-model="formDep.critRate" placeholder="请输入暴击几率")       
+          el-form-item(label="默认单位" prop="unit")
+            el-select(v-model="formDep.unit")
+              el-option(v-for="item in unitArray" :key="item.id" :value="item.id" :label="item.name")  
+          //- el-form-item(label="商品属性" prop="quantitative")
+          //-   el-radio-group(v-model="formDep.quantitative")
+          //-     el-radio(:label="1") 可量化
+          //-     el-radio(:label="0") 不可量化
+          //- el-form-item(label="是否参与暴击")
+          //-   el-col(:span="10")
+          //-     el-form-item(label="" prop="crit")
+          //-       el-radio-group(v-model="formDep.crit")
+          //-         el-radio(:label="1") 是
+          //-         el-radio(:label="0") 否
+          //-   el-col(:span="14" v-if="formDep.crit==1")          
+          //-     el-form-item(label="暴击几率" prop="critRate")
+          //-       el-input(v-model="formDep.critRate" placeholder="请输入暴击几率")       
           el-form-item(label="是否参与积分" prop="withIntegral")
             el-radio-group(v-model="formDep.withIntegral")
               el-radio(:label="1") 是
@@ -43,30 +46,38 @@
             el-radio-group(v-model="formDep.withDeduct")
               el-radio(:label="1") 是
               el-radio(:label="0") 否
-          el-form-item(label="商品价格/计量单位" v-if="!istaocan&&formDep.prop==1")
-            br
-            el-row(style="padding:10px;border:1px dotted #ccc")
-              el-form-item.level-item(label="商品单位" prop="unit" label-width="80px")
-                el-select(v-model="formDep.uint")
-                  el-option(v-for="item in typeArray" :label="item.label" :key="item.value" :value="item.value")
-              el-form-item.level-item(label="单价(元)" prop="price" label-width="80px")
-                el-input(v-model="formDep.price")              
-              el-form-item.level-item(label="成本(元)" prop="costPrice" label-width="80px")
-                el-input(v-model="formDep.Costprice")
-          el-form-item(label="商品规格信息" v-if="!istaocan")
-            br
-            .item-container(style="padding:10px;border:1px dotted #ccc")
-              el-row(v-for="(item,index) in formDep.goods_specification_list" :key="index")
-                el-col(:span="10")
-                  el-form-item.level-item1(label="规格" prop="specification" label-width="50px")
-                    el-select(v-model="item.specification")
-                      el-option(v-for="item in typeArray" :label="item.label" :key="item.value" :value="item.value")
-                el-col(:span="14")      
-                  el-form-item.level-item1(label="售价(元)" prop="salePrice" label-width="80px")
-                    el-input(v-model="item.salePrice")
-              el-row(style="text-align:right")
-                el-button(circle icon="el-icon-plus" type="primary" @click="addNext(1)")
-                el-button(circle icon="el-icon-delete" type="danger" @click="deleteLast(1)")
+          el-form-item(label="售价" prop="sale_price")
+            el-input(v-model="formDep.sale_price")
+          el-form-item(label="成本价" prop="cost_price")
+            el-input(v-model="formDep.cost_price")      
+          //- el-form-item(label="商品价格/计量单位" v-if="!istaocan&&formDep.prop==1")
+          //-   br
+          //-   el-row(style="padding:10px;border:1px dotted #ccc")
+          //-     el-form-item.level-item(label="商品单位" prop="unit" label-width="80px")
+          //-       el-select(v-model="formDep.uint")
+          //-         el-option(v-for="item in typeArray" :label="item.label" :key="item.value" :value="item.value")
+          //-     el-form-item.level-item(label="单价(元)" prop="price" label-width="80px")
+          //-       el-input(v-model="formDep.price")              
+          //-     el-form-item.level-item(label="成本(元)" prop="costPrice" label-width="80px")
+          //-       el-input(v-model="formDep.Costprice")
+          //- el-form-item(label="商品规格信息" v-if="!istaocan")
+          //-   br
+          //-   .item-container(style="padding:10px;border:1px dotted #ccc")
+          //-     el-row(v-for="(item,index) in formDep.goods_specification_list" :key="index")
+          //-       el-col(:span="10")
+          //-         el-form-item.level-item1(label="规格" prop="specification" label-width="50px")
+          //-           el-select(v-model="item.specification")
+          //-             el-option(v-for="item in typeArray" :label="item.label" :key="item.value" :value="item.value")
+          //-       el-col(:span="14")      
+          //-         el-form-item.level-item1(label="售价(元)" prop="salePrice" label-width="80px")
+          //-           el-input(v-model="item.salePrice")
+          //-     el-row(style="text-align:right")
+          //-       el-button(circle icon="el-icon-plus" type="primary" @click="addNext(1)")
+          //-       el-button(circle icon="el-icon-delete" type="danger" @click="deleteLast(1)")
+          el-form-item(label="商品备选属性")
+            dynamic-tags(v-model="formDep.alternative" btn-text="属性值" effect="dark")
+              el-input(v-model="formDep.alternative_name" placeholder='输入备选属性名称' style="width:150px!important;margin-right:10px")
+
           el-form-item(label="套餐商品信息" v-if="istaocan")
             .package-container
               .main-container
@@ -93,21 +104,17 @@
                 el-form-item(label="数量" label-width="60px")
                   el-input(v-model="formDep.subNum" type="number")      
 
-          el-form-item(label="套餐商品价格" v-if="istaocan")
-            br
-            el-row(style="padding:10px;border:1px dotted #ccc")
-              el-form-item.level-item(label="单价(元)" prop="price" label-width="80px")
-                el-input(v-model="formDep.price")              
-              el-form-item.level-item(label="成本(元)" prop="costPrice" label-width="80px")
-                el-input(v-model="formDep.Costprice")
+          //- el-form-item(label="套餐商品价格" v-if="istaocan")
+          //-   br
+          //-   el-row(style="padding:10px;border:1px dotted #ccc")
+          //-     el-form-item.level-item(label="单价(元)" prop="price" label-width="80px")
+          //-       el-input(v-model="formDep.price")              
+          //-     el-form-item.level-item(label="成本(元)" prop="costPrice" label-width="80px")
+          //-       el-input(v-model="formDep.Costprice")
           el-form-item(label="商品类型" prop="typeTags")
-            el-tag(:key="tag" v-for="tag in typeTags" closable :disable-transitions="false"  @close="handleClose(tag,1)")  {{tag}}   
-            el-input(class="input-new-tag" v-if="inputVisible" v-model="inputValue" ref="saveTagInput" @keyup.enter.native="handleInputConfirm(1)"  @blur="handleInputConfirm(1)")
-            el-button(v-else class="button-new-tag" size="small" @click="showInput(1)" :disabled="typeTags.length>=5") 新增类型            
+            dynamic-tags(v-model="formDep.type_tags" effect="plain")
           el-form-item(label="商品标签" prop="tags")
-            el-tag(:key="tag" v-for="tag in tags" closable :disable-transitions="false"  @close="handleClose(tag,0)")  {{tag}}   
-            el-input(class="input-new-tag" v-if="inputVisible2" v-model="inputValue2" ref="saveTagInput2" @keyup.enter.native="handleInputConfirm(0)"  @blur="handleInputConfirm(0)")
-            el-button(v-else class="button-new-tag" size="small" @click="showInput(0)" :disabled="tags.length>=5") 新增标签  
+            dynamic-tags(v-model="formDep.tags")  
           el-form-item(label="商品简介" prop="introduction")   
             el-input(type="textarea" v-model="formDep.introduction" :autosize="{ minRows: 2, maxRows: 4}")
           el-form-item(label="商品图片" prop="cover_img")
@@ -121,10 +128,13 @@
 <script>
 import fileInput from '../components/file-input'
 import multiImageInput from '../components/multi-image-input'
+import dynamicTags from '@/components/dynamic-tags'
+import {getRandom} from '@/js/util'
 export default {
   components:{
     fileInput,
-    multiImageInput
+    multiImageInput,
+    dynamicTags
   },
   data(){
     return{
@@ -134,10 +144,16 @@ export default {
         pg:1,
         size:20
       },
+      colorArray:[],
       formDep:{
+        alternative:[],
+        tags:[],
+        type_tags:[],
+        cost_price:'',
+        sale_price:'',
         good_name: '',
         type: 1,
-        quantitative:1,  //商品属性 (1:可量化，0：不可量化)
+        // quantitative:1,  //商品属性 (1:可量化，0：不可量化)
         img:'',  //商品封面图
         price:'',
         costPrice: '',
@@ -158,14 +174,6 @@ export default {
         // subCommodityArray:[],  //副商品
       },
       inputVisible3:false,
-      inputValue3: '', //标签输入框
-      subTags:[],
-      inputVisible2:false,
-      inputValue2: '', //标签输入框
-      typeTags:[], //标签列
-      inputVisible:false,
-      inputValue: '', //标签输入框
-      tags:[], //标签列
       title:'添加商品',
       showModal: false,
       mainCommodityArray:[ //所有商品列表(接口获取)
@@ -174,8 +182,8 @@ export default {
         {label:'薯条',value:3,}
       ],
       unitArray:[
-        {label:'瓶',value:1},
-        {label:'箱',value:2},
+        // {label:'瓶',value:1},
+        // {label:'箱',value:2},
       ],
       typeFirst:[],
       typeSecond:[],
@@ -228,7 +236,10 @@ export default {
       rules:{
         good_name:[{required:true,message:'请输入商品名称'}],
         type:[{required:true,message:'请选择商品类型'}],
-        quantitative:[{required:true,message:'必选'}],
+        // quantitative:[{required:true,message:'必选'}],
+        unit:[{ required:true, message:'请选择单位'}],
+        sale_price:[{ required: true, message: '请输入售价'}],
+        cost_price:[{ required: true, message: '请输入成本价'}],
         cover_img:[{required:true,message:'必选'}],
         crit:[{required:true,message:'必选'}],
         critRate:[{required:true,message:'必填'}],
@@ -240,32 +251,47 @@ export default {
       }
     }
   },
+ 
   watch:{
     'formDep.type':function(val,oldVal){
-      console.log(val,oldVal) 
+      // console.log(val,oldVal) 
       if(val==7||val==8||val==9||val==10)
         this.istaocan=true
       else 
         this.istaocan= false  
-    }
+    },
+    'formDep.alternative':function(val){
+      // console.log('商品tags',val)
+    },
+  },
+  beforeMount(){
+    this.getUnits()
   },
   mounted(){
-    this.getType('商品一级分类','g_first_name',this.typeFirst)
-    this.getType('商品二级分类','g_second_name',this.typeSecond)
+    this.getType('商品一级分类','g_first_name',1)
+    this.getType('商品二级分类','g_second_name',2)
   },
   methods:{
-    getType(url, key, lst){
+    getType(url, key, flag){ //获取分类列表
       this.$_app.get(url).then(d=>{
-        lst = d.data.ret.map(e=>{
-          return {value: e[key], id: e.id}
-        })
+        if(flag==1){
+           this.typeFirst = d.data.ret.map(e=>{
+            return {value: e[key], id: e.id}
+          })
+        }else {
+           this.typeSecond = d.data.ret.map(e=>{
+            return {value: e[key], id: e.id}
+          })
+        }
+       
       })
     },
     add(){
       this.showModal = true
     },
     confirm(){
-
+      console.log('form',this.formDep)
+      console.log('tags',this.typeTags)
     },
     dialogClose(){
       this.$refs.formDep.resetFields()
@@ -282,59 +308,11 @@ export default {
       else 
         this.formDep.mainCommodityArray.shift()  
     },
-    handleClose(tag, type) {
-      if(type==1){
-        this.tags.splice(this.tags.indexOf(tag), 1)
-      }   
-      else if(type==0){
-         this.typeTags.splice(this.typeTags.indexOf(tag), 1)
-      } else {
-        this.subTags.splice(this.subTags.indexOf(tag), 1)
-      }
-       
-    },
-    showInput(type) {
-      if(type==1){
-        this.inputVisible = true;
-        this.$nextTick(() => {
-          this.$refs.saveTagInput.$refs.input.focus();
-        });
-      } else if(type==0) {
-        this.inputVisible2 = true;
-        this.$nextTick(() => {
-          this.$refs.saveTagInput2.$refs.input.focus();
-        });
-      } else {
-        this.inputVisible3 = true
-        this.$nextTick(() => {
-          this.$refs.saveTagInput3.$refs.input.focus();
-        });
-      }
-         
-    },
-    handleInputConfirm(type) {
-      if(type==1) { 
-        let inputValue = this.inputValue;
-        if (inputValue) {
-          this.typeTags.push(inputValue);
-        }
-        this.inputVisible = false;
-        this.inputValue = '';
-      } else if(type==0){
-        let inputValue = this.inputValue2;
-         if (inputValue) {
-          this.tags.push(inputValue);
-        }
-        this.inputVisible2 = false;
-        this.inputValue2 = '';
-      } else {
-         let inputValue = this.inputValue3;
-         if (inputValue) {
-          this.subTags.push(inputValue)
-        }
-        this.inputVisible3 = false;
-        this.inputValue3 = '';
-      }      
+    getUnits(){ //接口拿到单位列表
+      this.$_app.get('单位').then(d=>{
+        // console.log('单位数据',d)
+        this.unitArray = d.data.ret
+      })
     },
     mainChange(index,val){
       console.log(val,index)
@@ -368,7 +346,7 @@ export default {
   .level-item:nth-last-child(1),.level-item1:nth-last-child(1){
     border-bottom:none!important;
   }
-  .el-tag + .el-tag {
+  /* .el-tag + .el-tag {
     margin-left: 10px;
   }
   .input-new-tag {
@@ -378,7 +356,7 @@ export default {
   }
   .button-new-tag {
     margin-left:20px  
-  }
+  } */
   .oper{
     text-align:right
   }
