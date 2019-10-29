@@ -104,7 +104,7 @@ export default {
             Object.assign(this.formDep,row)
             this.title = "编辑会员"
             this.showModal = true
-            setInterval(()=>{  //解决初始化会员类型时清空等级的bug
+            setTimeout(()=>{  //解决初始化会员类型时清空等级的bug
               this.formDep.grade_id = row.grade_id
             },500)
           }

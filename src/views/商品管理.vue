@@ -4,9 +4,9 @@
     crud(name="商品" :btns-shown="btns" :form='form' ref='form' :row-opers='rowOpers' hasIndex :staticTableData="staticTableData" hideDelete hideOper)
       .fr(slot="fr")
         el-button(type="primary" icon="el-icon-plus" @click="add" v-if="btns.includes('添加')||btns.includes('新增')") {{btns.includes('添加')?'添加':'新增'}}
-    el-dialog.mdialog(:title='title' :visible.sync='showModal' :close-on-click-modal='false' width="750px" @close="dialogClose")
-        el-form(label-width="150px" :model="formDep" :rules="rules" ref="formDep")
-          el-form-item(label="一级类型" prop="g_fisrt_id")
+    el-dialog.mdialog(:title='title' :visible.sync='showModal' :close-on-click-modal='false' width="850px" @close="dialogClose")
+        el-form(label-width="120px" :model="formDep" :rules="rules" ref="formDep")
+          el-form-item(label="一级类型" prop="g_first_id")
             el-select(v-model="formDep.g_fisrt_id")
                 el-option(v-for="item in typeFirst" :label="item.label" :key="item.value" :value="item.value")
           el-form-item(label="二级类型" prop="g_second_id")
@@ -14,8 +14,8 @@
                 el-option(v-for="item in typeSecond" :label="item.label" :key="item.value" :value="item.value")      
           el-form-item(label="商品名称" prop="good_name")
             el-input(v-model="formDep.good_name" maxLength="30" placeholder="请输入商品名称")
-          el-form-item(label="默认单位" prop="unit")
-            el-select(v-model="formDep.unit")
+          el-form-item(label="默认单位" prop="good_unit_id")
+            el-select(v-model="formDep.good_unit_id")
               el-option(v-for="item in unitArray" :key="item.id" :value="item.id" :label="item.name")  
           //- el-form-item(label="商品属性" prop="quantitative")
           //-   el-radio-group(v-model="formDep.quantitative")
@@ -46,40 +46,56 @@
             el-radio-group(v-model="formDep.withDeduct")
               el-radio(:label="1") 是
               el-radio(:label="0") 否
-          el-form-item(label="售价" prop="sale_price")
-            el-input(v-model="formDep.sale_price")
+          el-form-item(label="配送到" prop="delivery_to")
+            el-select(v-model="formDep.delivery_to")
+              el-option(label="后厨" :key="1" :value="1") 
+              el-option(label="吧台" :key="2" :value="2")     
+          el-form-item(label="售价" prop="price")
+            el-input-number(v-model="formDep.price" :min="1")
           el-form-item(label="成本价" prop="cost_price")
-            el-input(v-model="formDep.cost_price")      
-          //- el-form-item(label="商品价格/计量单位" v-if="!istaocan&&formDep.prop==1")
-          //-   br
-          //-   el-row(style="padding:10px;border:1px dotted #ccc")
-          //-     el-form-item.level-item(label="商品单位" prop="unit" label-width="80px")
-          //-       el-select(v-model="formDep.uint")
-          //-         el-option(v-for="item in typeArray" :label="item.label" :key="item.value" :value="item.value")
-          //-     el-form-item.level-item(label="单价(元)" prop="price" label-width="80px")
-          //-       el-input(v-model="formDep.price")              
-          //-     el-form-item.level-item(label="成本(元)" prop="costPrice" label-width="80px")
-          //-       el-input(v-model="formDep.Costprice")
-          //- el-form-item(label="商品规格信息" v-if="!istaocan")
-          //-   br
-          //-   .item-container(style="padding:10px;border:1px dotted #ccc")
-          //-     el-row(v-for="(item,index) in formDep.goods_specification_list" :key="index")
-          //-       el-col(:span="10")
-          //-         el-form-item.level-item1(label="规格" prop="specification" label-width="50px")
-          //-           el-select(v-model="item.specification")
-          //-             el-option(v-for="item in typeArray" :label="item.label" :key="item.value" :value="item.value")
-          //-       el-col(:span="14")      
-          //-         el-form-item.level-item1(label="售价(元)" prop="salePrice" label-width="80px")
-          //-           el-input(v-model="item.salePrice")
-          //-     el-row(style="text-align:right")
-          //-       el-button(circle icon="el-icon-plus" type="primary" @click="addNext(1)")
-          //-       el-button(circle icon="el-icon-delete" type="danger" @click="deleteLast(1)")
-          el-form-item(label="商品备选属性")
-            dynamic-tags(v-model="formDep.alternative" btn-text="属性值" effect="dark")
-              el-input(v-model="formDep.alternative_name" placeholder='输入备选属性名称' style="width:150px!important;margin-right:10px")
-
+            el-input-number(v-model="formDep.cost_price" :min="1")
+          el-form-item(label="限购数量" prop="purchase_quantity")
+            el-input-number(v-model="formDep.purchase_quantity" :min="1")        
+          el-form-item(label="商品规格")
+            br
+            .listContainer
+              el-row(class="listItem" v-for="(listItem,index) in formDep.goods_specification_list" :key="index")
+                el-col(:span="8")
+                  el-form-item(label="单位名称" label-width="70px")
+                    el-select(v-model="listItem.unit_id")
+                     el-option(v-for="item in unitArray" :key="item.id" :value="item.id" :label="item.name")
+                el-col(:span="8")
+                  el-form-item(label="单价" label-width="86px")
+                    el-input(v-model="listItem.price" :min="0" @keyup="")
+                el-col(:span="8")
+                  el-form-item(label="成本" label-width="70px")
+                    el-input(v-model="listItem.cost_price" :min="0")            
+                el-col(:span="8")
+                  el-form-item(label="限购数量" label-width="70px")
+                    el-input(v-model="listItem.purchase_quantity" :min="0")
+                el-col(:span="8")
+                  el-form-item(label="使用转换率" label-width="86px")
+                    el-radio-group(v-model="listItem.is_conversion")
+                      el-radio(:label="1") 是
+                      el-radio(:label="0") 否
+                el-col(:span="7" v-if='listItem.is_conversion==1')
+                  el-form-item(label="转换率" label-width="70px")
+                    el-input-number(v-model="listItem.conversion_rate" :min="0")
+              .opers
+                el-button(circle icon="el-icon-plus" type="primary" @click="addNext(1)")    
+                el-button(circle icon="el-icon-delete" type="danger" @click="deleteLast(1)" :disabled="formDep.goods_specification_list.length<1")
+          el-form-item(label="商品备选属性" prop="remarks_attribute_list")
+            tags-list(v-model="formDep.remarks_attribute_list" style="padding:10px solid #ccc")
+              .opers
+                el-button(circle icon="el-icon-plus" type="primary" )    
+                el-button(circle icon="el-icon-delete" type="danger" :disabled="formDep.remarks_attribute_list.length<1")
+            //- dynamic-tags(v-model="formDep.remarks_attribute_list.value" btn-text="属性值" effect="dark" style="padding:10px;border:1px dotted #ccc")
+            //-   span 备选属性名称：
+            //-   el-input.inputBorderNone(v-model="formDep.remarks_attribute_list.name" placeholder='输入备选属性名称' style="width:150px!important;border:none!important")
+            //-   br
+            //-   span 备选属性值：
           el-form-item(label="套餐商品信息" v-if="istaocan")
-            .package-container
+            .package-container 
               .main-container
                 .title(style="text-algin:left") 主商品:
                 el-row.main(v-for="(lst,index) in formDep.mainCommodityArray" :key='index')
@@ -128,13 +144,15 @@
 <script>
 import fileInput from '../components/file-input'
 import multiImageInput from '../components/multi-image-input'
-import dynamicTags from '@/components/dynamic-tags'
-import {getRandom} from '@/js/util'
+import dynamicTags from '@/components/tags-list/dynamic-tags'
+import tagsList from '@/components/tags-list/index.vue'
+// import {getRandom} from '@/js/util'
 export default {
   components:{
     fileInput,
     multiImageInput,
-    dynamicTags
+    dynamicTags,
+    tagsList
   },
   data(){
     return{
@@ -146,31 +164,37 @@ export default {
       },
       colorArray:[],
       formDep:{
-        alternative:[],
+        g_first_id:'',
+        g_second_id:'',
+        good_unit_id:'', //单位
+        delivery_to:'',  //配送到
+        remarks_attribute_list:[{
+          name:'',
+          child_attribute: []
+        }],
         tags:[],
         type_tags:[],
-        cost_price:'',
-        sale_price:'',
-        good_name: '',
+        cost_price:'',  //成本价
+        price:'', //单价（售价）
+        good_name: '', 
+        purchase_quantity:'',
         type: 1,
         // quantitative:1,  //商品属性 (1:可量化，0：不可量化)
         img:'',  //商品封面图
-        price:'',
         costPrice: '',
         sales: '',
         withOffset: 1,
         withIntegral:1,
         withDiscount:1,
         withDeduct: 1, //是否参与提成 
-        crit:1,   //是否暴击   
-        critRate:'', //暴击几率
-        distributionTo:'',
+        // crit:1,   //是否暴击   
+        // critRate:'', //暴击几率
         details:'',//商品详细(多张图)
-        goods_specification_list:[
-          {specification:'',salePrice:''},
-          {specification:'',salePrice:''}
+        goods_specification_list:[  //商品规格
+          { unit_id:'', price:'', cost_price:'', purchase_quantity:'', is_conversion:1, coversion_rate:'' },
+          { unit_id:'', price:'', cost_price:'', purchase_quantity:'', is_conversion:1, coversion_rate:'' },
         ],
-        mainCommodityArray:[{name:'',value:'',number:'',unit:''}], //主商品
+        // mainCommodityArray:[{name:'',value:'',number:'',unit:''}], //主商品
         // subCommodityArray:[],  //副商品
       },
       inputVisible3:false,
@@ -204,7 +228,7 @@ export default {
           withDeduct:1,
           crit: 0,     
           critRate:0.5,
-          distributionTo:'后厨'
+          delivery_to:'后厨'
         }
       ], //测试数据
       rowOpers:[
@@ -234,13 +258,16 @@ export default {
         },
       ],
       rules:{
-        good_name:[{required:true,message:'请输入商品名称'}],
-        type:[{required:true,message:'请选择商品类型'}],
+        g_first_id: [ { required: true, message: '请选择商品一级分类'}],
+        g_second_id: [ { required: true, message: '请选择商品二级分类'} ],
+        good_name: [{required:true,message:'请输入商品名称'}],
+        type: [ {required:true,message:'请选择商品类型'} ],
         // quantitative:[{required:true,message:'必选'}],
-        unit:[{ required:true, message:'请选择单位'}],
-        sale_price:[{ required: true, message: '请输入售价'}],
-        cost_price:[{ required: true, message: '请输入成本价'}],
-        cover_img:[{required:true,message:'必选'}],
+        good_unit_id: [{ required:true, message:'请选择单位'}],
+        delivery_to: [ { required: true, message: '请选择配送地', trigger: 'blur' } ],
+        price: [ { required: true, message: '请输入售价'} ],
+        cost_price: [ { required: true, message: '请输入成本价'}],
+        cover_img:[ {required :true, message: '必选' } ],
         crit:[{required:true,message:'必选'}],
         critRate:[{required:true,message:'必填'}],
         withIntegral:[{required:true,message:'必选'}],
@@ -251,39 +278,41 @@ export default {
       }
     }
   },
- 
   watch:{
-    'formDep.type':function(val,oldVal){
+    'formDep.type':function(val){
       // console.log(val,oldVal) 
       if(val==7||val==8||val==9||val==10)
         this.istaocan=true
       else 
         this.istaocan= false  
     },
-    'formDep.alternative':function(val){
-      // console.log('商品tags',val)
+    'formDep.g_fisrt_id':function(val){
+      console.log(val)
+      this.formDep.g_second_id= '' //清除二级菜单值
+      this.getTypeSecond(val)    // 获取二级菜单列表
     },
   },
   beforeMount(){
     this.getUnits()
   },
   mounted(){
-    this.getType('商品一级分类','g_first_name',1)
-    this.getType('商品二级分类','g_second_name',2)
+    this.getTypeFirst()
+    // this.getTypeSecond('商品二级分类','g_second_name',2)
   },
   methods:{
-    getType(url, key, flag){ //获取分类列表
-      this.$_app.get(url).then(d=>{
-        if(flag==1){
-           this.typeFirst = d.data.ret.map(e=>{
-            return {value: e[key], id: e.id}
-          })
-        }else {
-           this.typeSecond = d.data.ret.map(e=>{
-            return {value: e[key], id: e.id}
-          })
-        }
-       
+    getTypeFirst(){ //获取分类列表
+      this.$_app.get('商品一级分类').then(d=>{   
+        this.typeFirst = d.data.ret.map(e=>{
+          return {label: e['g_first_name'], value: e.id}
+        })
+      })
+    },
+    getTypeSecond(id){
+      this.typeSecond= []
+      this.$_app.get('商品二级分类',{g_first_id:id}).then(d=>{
+        this.typeSecond = d.data.ret.map(e=>{
+          return {label:e['g_second_name'],value: e.id}
+        })
       })
     },
     add(){
@@ -346,17 +375,7 @@ export default {
   .level-item:nth-last-child(1),.level-item1:nth-last-child(1){
     border-bottom:none!important;
   }
-  /* .el-tag + .el-tag {
-    margin-left: 10px;
-  }
-  .input-new-tag {
-    width: 90px!important;
-    margin-left: 10px;
-    vertical-align: bottom;
-  }
-  .button-new-tag {
-    margin-left:20px  
-  } */
+ 
   .oper{
     text-align:right
   }
@@ -367,6 +386,29 @@ export default {
   .main{
    margin-bottom:10px
   }
+  .el-radio+.el-radio {
+    margin-left: 0px;
+  }
+  .listContainer {
+    border:1px dotted #cccccc;
+    padding: 15px;
+  }
+  /* .listItem:nth-last-of-type(1){
+     border-bottom:1px dashed #ababab;
+  } */
+  .listItem{
+    display: flex;
+    flex-wrap: wrap;
+    border:1px dashed #ababab;
+    padding:10px;
+    margin-top:5px;
+  }
+   
+  .listItem .el-col{
+    padding:5px 0;
+    width:33%;
+  }
+  
 </style>
 <style>
   .level-item:nth-last-child(1){

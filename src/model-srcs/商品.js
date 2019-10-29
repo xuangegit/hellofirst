@@ -4,7 +4,7 @@ export default {
   typeName:['商品类别'],
   img:['商品图片','multi-image'],
   price: ['单价(元)','',{}],
-  costPrice: ['成本价(元)', '', {
+  cost_price: ['成本价(元)', '', {
     required: true
   }],
   sales: ['销量'],
@@ -17,5 +17,5 @@ export default {
   crit: ['参与暴击','select',{mapper:{0:'否',1:'是'}}],     
   critRate: ['暴击几率','select',{
   }],
-  distributionTo:['配送到','']
+  delivery_to:['配送到','']
 }

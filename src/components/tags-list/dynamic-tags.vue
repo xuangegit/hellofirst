@@ -19,6 +19,7 @@ import {getRandom} from '@/js/util'
       },
       btnText:String,
       effect:String,
+      // style:{}
     },
     data() {
       return {
