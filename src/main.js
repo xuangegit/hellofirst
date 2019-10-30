@@ -13,7 +13,9 @@ import apis from './js/apis'
 import Crud from './components/crud'
 import ModelInputs from './components/model-inputs'
 import ModelFormDialog from './components/model-form-dialog.vue'
-
+import vueEditor from 'vue-editor-interline'
+ 
+Vue.use(vueEditor)
 Vue.component('page-title', PageTitle)
 Vue.component('crud', Crud)
 Vue.component('model-inputs', ModelInputs)

@@ -5,6 +5,7 @@
     el-tag(:key="tag" v-for="(tag,index) in dynamicTags" closable :disable-transitions="false"  :effect="effect" @close="handleClose(tag)" :type="randomColor[index]") {{tag}}
     el-input(class="input-new-tag" v-if="inputVisible" v-model="inputValue" ref="saveTagInput" size="small" @keyup.enter.native="handleInputConfirm" @blur="handleInputConfirm")
     el-button(v-else class="button-new-tag" size="small" @click="showInput") 新增{{btnText}} 
+    slot(name="bottom")
 </template>
 <script>
 import {getRandom} from '@/js/util'

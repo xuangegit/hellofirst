@@ -8,6 +8,7 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "@tinymce/tinymce-vue": "^3.0.1",
     "ali-oss": "^6.1.0",
     "axios": "^0.18.1",
     "babel-plugin-component": "^1.1.1",
@@ -19,6 +20,7 @@
     "md5": "^2.2.1",
     "v-viewer": "^1.4.0",
     "vue": "^2.5.17",
+    "vue-editor-interline": "^1.0.0",
     "vue-router": "^3.0.1",
     "wangeditor": "^3.1.1"
   },
