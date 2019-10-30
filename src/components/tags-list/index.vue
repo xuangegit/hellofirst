@@ -1,6 +1,6 @@
 <template lang='pug'>
   div
-    dynamic-tags(v-for="(item,index) in remarks_attribute_list" :key="index" v-model="item.child_attribute" btn-text="属性值" effect="dark" style="padding:10px;border:1px dotted #ccc")
+    dynamic-tags(v-for="(item,index) in remarks_attribute_list" :key="index" v-model="item.child_attribute" btn-text="属性值" effect="dark" style="padding:10px;border:1px dashed #ababab;margin:8px 0")
       span 备选属性名称：
       el-input.inputBorderNone(v-model="item.name" placeholder='输入属性名称' style="width:120px!important;border:none!important;")
       //- br

@@ -8,12 +8,12 @@ export default {
     required: true
   }],
   sales: ['销量'],
-  withOffset: ['参与抵消', 'select', {mapper:{0:'否',1:'是'}}],
-  withIntegral: ['参与积分', 'select',{
+  is_in_low: ['参与抵消', 'select', {mapper:{0:'否',1:'是'}}],
+  is_points: ['参与积分', 'select',{
     mapper:{0:'否',1:'是'}
   }],
-  withDiscount: ['参与折扣','select',{mapper:{0:'否',1:'是'}}],
-  withDeduct:['参与提成','select',{mapper:{0:'否',1:'是'}}],
+  is_discount: ['参与折扣','select',{mapper:{0:'否',1:'是'}}],
+  is_commission:['参与提成','select',{mapper:{0:'否',1:'是'}}],
   crit: ['参与暴击','select',{mapper:{0:'否',1:'是'}}],     
   critRate: ['暴击几率','select',{
   }],

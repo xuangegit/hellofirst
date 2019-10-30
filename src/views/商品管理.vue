@@ -30,20 +30,20 @@
           //-   el-col(:span="14" v-if="formDep.crit==1")          
           //-     el-form-item(label="暴击几率" prop="critRate")
           //-       el-input(v-model="formDep.critRate" placeholder="请输入暴击几率")       
-          el-form-item(label="是否参与积分" prop="withIntegral")
-            el-radio-group(v-model="formDep.withIntegral")
+          el-form-item(label="是否参与积分" prop="is_points")
+            el-radio-group(v-model="formDep.is_points")
               el-radio(:label="1") 是
               el-radio(:label="0") 否
-          el-form-item(label="是否参与抵消" prop="withOffset")
-            el-radio-group(v-model="formDep.withOffset")
+          el-form-item(label="是否参与抵消" prop="is_in_low")
+            el-radio-group(v-model="formDep.is_in_low")
               el-radio(:label="1") 是
               el-radio(:label="0") 否  
-          el-form-item(label="是否参与折扣" prop="withDiscount")
-            el-radio-group(v-model="formDep.withDiscount")
+          el-form-item(label="是否参与折扣" prop="is_discount")
+            el-radio-group(v-model="formDep.is_discount")
               el-radio(:label="1") 是
               el-radio(:label="0") 否
-          el-form-item(label="是否参与提成" prop="withDeduct")
-            el-radio-group(v-model="formDep.withDeduct")
+          el-form-item(label="是否参与提成" prop="is_commission")
+            el-radio-group(v-model="formDep.is_commission")
               el-radio(:label="1") 是
               el-radio(:label="0") 否
           el-form-item(label="配送到" prop="delivery_to")
@@ -83,12 +83,12 @@
                     el-input-number(v-model="listItem.conversion_rate" :min="0")
               .opers
                 el-button(circle icon="el-icon-plus" type="primary" @click="addNext(1)")    
-                el-button(circle icon="el-icon-delete" type="danger" @click="deleteLast(1)" :disabled="formDep.goods_specification_list.length<1")
+                el-button(circle icon="el-icon-delete" type="danger" @click="deleteLast(1)" :disabled="formDep.goods_specification_list.length<2")
           el-form-item(label="商品备选属性" prop="remarks_attribute_list")
-            tags-list(v-model="formDep.remarks_attribute_list" style="padding:10px solid #ccc")
+            tags-list(v-model="formDep.remarks_attribute_list" style="padding:10px;border:1px dotted #ccc")
               .opers
-                el-button(circle icon="el-icon-plus" type="primary" )    
-                el-button(circle icon="el-icon-delete" type="danger" :disabled="formDep.remarks_attribute_list.length<1")
+                el-button(circle icon="el-icon-plus" type="primary" @click="addNext(2)")    
+                el-button(circle icon="el-icon-delete" type="danger" :disabled="formDep.remarks_attribute_list.length<2" @click="deleteLast(2)")
             //- dynamic-tags(v-model="formDep.remarks_attribute_list.value" btn-text="属性值" effect="dark" style="padding:10px;border:1px dotted #ccc")
             //-   span 备选属性名称：
             //-   el-input.inputBorderNone(v-model="formDep.remarks_attribute_list.name" placeholder='输入备选属性名称' style="width:150px!important;border:none!important")
@@ -129,8 +129,8 @@
           //-       el-input(v-model="formDep.Costprice")
           el-form-item(label="商品类型" prop="typeTags")
             dynamic-tags(v-model="formDep.type_tags" effect="plain")
-          el-form-item(label="商品标签" prop="tags")
-            dynamic-tags(v-model="formDep.tags")  
+          el-form-item(label="商品标签" prop="label")
+            dynamic-tags(v-model="formDep.label")  
           el-form-item(label="商品简介" prop="introduction")   
             el-input(type="textarea" v-model="formDep.introduction" :autosize="{ minRows: 2, maxRows: 4}")
           el-form-item(label="商品图片" prop="cover_img")
@@ -172,7 +172,7 @@ export default {
           name:'',
           child_attribute: []
         }],
-        tags:[],
+        label:[],
         type_tags:[],
         cost_price:'',  //成本价
         price:'', //单价（售价）
@@ -183,10 +183,10 @@ export default {
         img:'',  //商品封面图
         costPrice: '',
         sales: '',
-        withOffset: 1,
-        withIntegral:1,
-        withDiscount:1,
-        withDeduct: 1, //是否参与提成 
+        is_in_low: 1,
+        is_points:1,
+        is_discount:1,
+        is_commission: 1, //是否参与提成 
         // crit:1,   //是否暴击   
         // critRate:'', //暴击几率
         details:'',//商品详细(多张图)
@@ -222,10 +222,10 @@ export default {
           costPrice: 50,
           quantitative:1,
           sales: 200,
-          withOffset: 0,
-          withIntegral:1,
-          withDiscount:1,
-          withDeduct:1,
+          is_in_low: 0,
+          is_points:1,
+          is_discount:1,
+          is_commission:1,
           crit: 0,     
           critRate:0.5,
           delivery_to:'后厨'
@@ -267,13 +267,14 @@ export default {
         delivery_to: [ { required: true, message: '请选择配送地', trigger: 'blur' } ],
         price: [ { required: true, message: '请输入售价'} ],
         cost_price: [ { required: true, message: '请输入成本价'}],
+        label:[ { required: true} ],
         cover_img:[ {required :true, message: '必选' } ],
         crit:[{required:true,message:'必选'}],
         critRate:[{required:true,message:'必填'}],
-        withIntegral:[{required:true,message:'必选'}],
-        withOffset:[{required:true,message:'必选'}],
-        withDiscount:[{required:true,message:'必选'}],
-        withDeduct:[{required:true,message:'必选'}],
+        is_points:[{required:true,message:'必选'}],
+        is_in_low:[{required:true,message:'必选'}],
+        is_discount:[{required:true,message:'必选'}],
+        is_commission:[{required:true,message:'必选'}],
         discount:[{required:true,message:'请输入折扣值'}]
       }
     }
@@ -326,16 +327,20 @@ export default {
       this.$refs.formDep.resetFields()
     },
     addNext(type){
-      if(type)
+      if(type==1)
         this.formDep.goods_specification_list.push({name:''})
-      else 
+      else if(type==0)
         this.formDep.mainCommodityArray.push({name:''})
+      else 
+        this.formDep.remarks_attribute_list.push({name:'',child_attribute:[]})  
     },
     deleteLast(type){
-      if(type)
+      if(type==1)
         this.formDep.goods_specification_list.shift()
+      else if(type==0) 
+        this.formDep.mainCommodityArray.shift()
       else 
-        this.formDep.mainCommodityArray.shift()  
+        this.formDep.remarks_attribute_list.shift()    
     },
     getUnits(){ //接口拿到单位列表
       this.$_app.get('单位').then(d=>{
@@ -401,7 +406,7 @@ export default {
     flex-wrap: wrap;
     border:1px dashed #ababab;
     padding:10px;
-    margin-top:5px;
+    margin:5px 0;
   }
    
   .listItem .el-col{
