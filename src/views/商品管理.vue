@@ -1,6 +1,7 @@
 <template lang="pug">
   .page
     page-title 商品管理
+    //- <img src="http://bird-fisher.oss-cn-shanghai.aliyuncs.com/fisherOne/toutiao/toutiaoImg/1572493197316_girl.jpg" />
     crud(name="商品" :btns-shown="btns" :form='form' ref='form' :row-opers='rowOpers' hasIndex :staticTableData="staticTableData" hideDelete hideOper)
       .fr(slot="fr")
         el-button(type="primary" icon="el-icon-plus" @click="add" v-if="btns.includes('添加')||btns.includes('新增')") {{btns.includes('添加')?'添加':'新增'}}
@@ -17,19 +18,6 @@
           el-form-item(label="默认单位" prop="good_unit_id")
             el-select(v-model="formDep.good_unit_id")
               el-option(v-for="item in unitArray" :key="item.id" :value="item.id" :label="item.name")  
-          //- el-form-item(label="商品属性" prop="quantitative")
-          //-   el-radio-group(v-model="formDep.quantitative")
-          //-     el-radio(:label="1") 可量化
-          //-     el-radio(:label="0") 不可量化
-          //- el-form-item(label="是否参与暴击")
-          //-   el-col(:span="10")
-          //-     el-form-item(label="" prop="crit")
-          //-       el-radio-group(v-model="formDep.crit")
-          //-         el-radio(:label="1") 是
-          //-         el-radio(:label="0") 否
-          //-   el-col(:span="14" v-if="formDep.crit==1")          
-          //-     el-form-item(label="暴击几率" prop="critRate")
-          //-       el-input(v-model="formDep.critRate" placeholder="请输入暴击几率")       
           el-form-item(label="是否参与积分" prop="is_points")
             el-radio-group(v-model="formDep.is_points")
               el-radio(:label="1") 是
@@ -47,23 +35,28 @@
               el-radio(:label="1") 是
               el-radio(:label="0") 否
           el-form-item(label="配送到" prop="delivery_to")
-            el-select(v-model="formDep.delivery_to")
-              el-option(label="后厨" :key="1" :value="1") 
-              el-option(label="吧台" :key="2" :value="2")     
+            el-radio-group(v-model="formDep.delivery_to")
+              el-radio(:label="1") 后厨
+              el-radio(:label="2") 吧台
+              el-radio(:label="3") 前台
+            //- el-select(v-model="formDep.delivery_to")
+            //-   el-option(label="后厨" :key="1" :value="1") 
+            //-   el-option(label="吧台" :key="2" :value="2")     
           el-form-item(label="售价" prop="price")
             el-input-number(v-model="formDep.price" :min="1")
           el-form-item(label="成本价" prop="cost_price")
             el-input-number(v-model="formDep.cost_price" :min="1")
           el-form-item(label="限购数量" prop="purchase_quantity")
             el-input-number(v-model="formDep.purchase_quantity" :min="1")        
-          el-form-item(label="商品规格")
+          el-form-item(label="商品规格" prop="goods_specification_list")
             br
             .listContainer
               el-row(class="listItem" v-for="(listItem,index) in formDep.goods_specification_list" :key="index")
                 el-col(:span="8")
-                  el-form-item(label="单位名称" label-width="70px")
-                    el-select(v-model="listItem.unit_id")
-                     el-option(v-for="item in unitArray" :key="item.id" :value="item.id" :label="item.name")
+                  el-form-item(label="规格名称" label-width="70px")
+                    el-input(v-model="listItem.specification_name")
+                    //- el-select(v-model="listItem.unit_id")
+                    //-  el-option(v-for="item in unitArray" :key="item.id" :value="item.id" :label="item.name")
                 el-col(:span="8")
                   el-form-item(label="单价" label-width="86px")
                     el-input(v-model="listItem.price" :min="0" @keyup="")
@@ -118,14 +111,12 @@
             dynamic-tags(v-model="formDep.label")  
           el-form-item(label="商品简介" prop="introduction")   
             el-input(type="textarea" v-model="formDep.introduction" :autosize="{ minRows: 2, maxRows: 4}")
-          el-form-item(label="商品详情")
-           vue-editor(v-model="formDep.details")  
+          el-form-item(label="商品详情" prop="details")
+            my-editor(v-model="formDep.details")  
           el-form-item(label="商品图片" prop="cover_img")
-           file-input(type="image" v-model="formDep.img" )
+           file-input(type="image" v-model="formDep.img")
           el-form-item(label="商品图片集" prop="img_list")
-           multi-image-input(type="muti-image" v-model="formDep.img_list" ) 
-          el-form-item(label="富文本")
-            my-editor         
+           multi-image-input(type="muti-image" v-model="formDep.img_list" )      
         .btns(slot='footer')   
           el-button(type='primary' @click='confirm') 确定
           el-button(@click='showModal = false') 取消      
@@ -269,7 +260,12 @@ export default {
         is_in_low:[{required:true,message:'必选'}],
         is_discount:[{required:true,message:'必选'}],
         is_commission:[{required:true,message:'必选'}],
-        discount:[{required:true,message:'请输入折扣值'}]
+        discount:[ { required:true,message:'请输入折扣值'} ],
+        introduction:[ { required:true, message: '请输入简介'} ],
+        details:[ { required: true, message:'请输入详情' } ],
+        remarks_attribute_list:[ { required:true, message: '必填'} ],
+        goods_specification_list:[ { required:true, message: '必填'} ],
+        purchase_quantity:[ { required: true, message: '请输入限购数量' } ]
       }
     }
   },
@@ -318,7 +314,6 @@ export default {
     },
     confirm(){
       console.log('form',this.formDep)
-      console.log('tags',this.typeTags)
     },
     dialogClose(){
       this.$refs.formDep.resetFields()

@@ -88,7 +88,7 @@ var app = {
   axios:axios,
   /**
    * 获取角色ID
-   * @returns {number} 1：系统，2：合伙人，3：系统运营人员，4：卫星运营人员(技术)
+   * @returns {number} 
    **/
   getRole() {
     // return app.getLogin().role_id

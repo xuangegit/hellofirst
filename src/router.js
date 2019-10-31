@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 const Login = () => import('@/views/Login')
 const Main = () => import('@/views/Main')
+import {Message} from 'element-ui'
 
 Vue.use(Router)
 
@@ -65,5 +66,25 @@ for (let page of pages) {
     name: page,
   })
 }
-
-export default new Router(routerOptions)
+const router = new Router(routerOptions)
+router.beforeEach((to, from, next) => {
+  console.log(to,from)
+  // // console.log('sessionStorage.token',Boolean(sessionStorage.token))
+  // next()
+  if(sessionStorage.token) {
+    if(to.path=='/login'||to.path=='/') 
+      next({path:'/main'})
+    else {
+      next()
+    }  
+  }else {
+      if(to.path=='/login'){
+        next()
+      }else{
+        Message.warning('请登录')
+        next({path:'/login'})
+      }
+      
+  }
+})
+export default router

@@ -1,11 +1,10 @@
 <template>
   <div class="page">
-    <header>
+    <!-- <header>
       <div class="header-pic">
         <img src="../assets/logo.png" height="56px">
-        <!-- ktv管理 -->
       </div>
-    </header>
+    </header> -->
     <article class="login_bg">
       <div class="login-pic">
       </div>
@@ -47,9 +46,9 @@
         </div>
       </div>
     </article>
-    <footer>
+    <!-- <footer>
         <p>公司名称</p>
-    </footer>
+    </footer> -->
   </div>
 </template>
 
@@ -173,6 +172,7 @@ export default {
 }
 
 .login_bg{
+  height:100%;
    background url(../assets/login_bg.jpg) no-repeat center/cover
 }
 .login-pic{
@@ -199,7 +199,7 @@ article{
 .login-box-background {
   border: 8px solid rgba(255, 255, 255, 0.22);
   border-radius: 5px;
-  width: 364px;
+  width: 416px;
 }
 .login-box {
   background: #ffffff;
@@ -214,7 +214,7 @@ article{
   padding: 10px 15px;
   color: #ffffff;
   border-radius: 3px;
-  width: 300px;
+  width: 356px;
   cursor: pointer;
   font-size: 20px;
 }

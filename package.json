@@ -20,7 +20,6 @@
     "md5": "^2.2.1",
     "v-viewer": "^1.4.0",
     "vue": "^2.5.17",
-    "vue-editor-interline": "^1.0.0",
     "vue-router": "^3.0.1",
     "wangeditor": "^3.1.1"
   },
