@@ -1,13 +1,11 @@
 export default {
-  name: ['商品名称', '',{required:true,placeholder:'请输入会员名称'}],
-  type: ['商品类别', 'select',{hideInTable:true}],
-  typeName:['商品类别'],
-  img:['商品图片','multi-image'],
-  price: ['单价(元)','',{}],
-  cost_price: ['成本价(元)', '', {
-    required: true
-  }],
-  sales: ['销量'],
+  good_name: ['商品名称'],
+  g_second_name:['商品类别'],
+  cover_img:['商品图片','image'],
+  img_list:['图片集','multi-image',{minWidth: '180px'}],
+  unit_price: ['单价(元)'],
+  good_cost: ['成本价(元)'],
+  sales_volume: ['销量'],
   is_in_low: ['参与抵消', 'select', {mapper:{0:'否',1:'是'}}],
   is_points: ['参与积分', 'select',{
     mapper:{0:'否',1:'是'}

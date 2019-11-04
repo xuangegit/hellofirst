@@ -2,7 +2,7 @@
   .page
     page-title 商品管理
     //- <img src="http://bird-fisher.oss-cn-shanghai.aliyuncs.com/fisherOne/toutiao/toutiaoImg/1572493197316_girl.jpg" />
-    crud(name="商品" :btns-shown="btns" :form='form' ref='form' :row-opers='rowOpers' hasIndex :staticTableData="staticTableData" )
+    crud(name="商品" :btns-shown="btns" :form='form' ref='form' :row-opers='rowOpers' hasIndex hideSelect )
       .fr(slot="fr")
         el-button(type="primary" icon="el-icon-plus" @click="add" v-if="btns.includes('添加')||btns.includes('新增')") {{btns.includes('添加')?'添加':'新增'}}
     el-dialog.mdialog(:title='title' :visible.sync='showModal' :close-on-click-modal='false' width="850px" @close="dialogClose")
@@ -54,15 +54,15 @@
             br
             .listContainer
               el-row(class="listItem" v-for="(listItem,index) in formDep.goods_specification_list" :key="index")
-                el-col(:span="12" style="width:50%")
+                el-col(:span="8" style="width:33%")
                   el-form-item(label="规格名称" label-width="90px")
                     el-input(v-model="listItem.specification_name")
-                el-col(:span="12" style="width:50%")    
-                  el-form-item(label="单位")  
+                el-col(:span="8" style="width:33%")    
+                  el-form-item(label="单位" label-width="60px")  
                     el-select(v-model="listItem.unit_id")
                      el-option(v-for="item in unitArray" :key="item.id" :value="item.id" :label="item.name")
                 el-col(:span="8" style="width:33%")
-                  el-form-item(label="单价" label-width="86px")
+                  el-form-item(label="单价" label-width="60px")
                     el-input(v-model="listItem.price" :min="0" @keyup="")
                 el-col(:span="8" style="width:33%")
                   el-form-item(label="成本" label-width="70px")
@@ -70,14 +70,14 @@
                 el-col(:span="8" style="width:33%")
                   el-form-item(label="限购数量" label-width="90px")
                     el-input(v-model="listItem.purchase_quantity" :min="0")
-                el-col(:span="16" style="width:50%")
-                  el-form-item(label="是否使用转换率" label-width="130px")
-                    el-radio-group(v-model="listItem.is_conversion")
-                      el-radio(:label="1") 是
-                      el-radio(:label="0") 否
-                el-col(:span="8" v-if='listItem.is_conversion==1' style="width:50%")
+                //- el-col(:span="16" style="width:50%")
+                //-   el-form-item(label="是否使用转换率" label-width="130px")
+                //-     el-radio-group(v-model="listItem.is_conversion")
+                //-       el-radio(:label="1") 是
+                //-       el-radio(:label="0") 否
+                el-col(:span="8" style="width:33%")
                   el-form-item(label="转换率" label-width="80px")
-                    el-input-number(v-model="listItem.conversion_rate" :min="0")
+                    el-input-number(v-model="listItem.conversion_rate" :min="1")
               .opers
                 el-button(circle icon="el-icon-plus" type="primary" @click="addNext(1)")    
                 el-button(circle icon="el-icon-delete" type="danger" @click="deleteLast(1)" :disabled="formDep.goods_specification_list.length<2")
@@ -180,7 +180,7 @@ export default {
         introduction:'',
         img_list: [],
         goods_specification_list:[  //商品规格
-          { unit_id:'', price:'', cost_price:'', purchase_quantity:'', is_conversion:1, conversion_rate:'' },
+          { unit_id:'', price:'', cost_price:'', purchase_quantity:'',  conversion_rate:1 },
           // { unit_id:'', price:'', cost_price:'', purchase_quantity:'', is_conversion:1, conversion_rate:'' },
         ],
         // mainCommodityArray:[{name:'',value:'',number:'',unit:''}], //主商品
@@ -201,25 +201,6 @@ export default {
       typeFirst:[],
       typeSecond:[],
       typeArray:[],
-      staticTableData:[
-         {
-          good_name: '有龙在天',
-          type: 1,
-          typeName:'套餐',
-          cover_img:'http://bird-fisher.oss-cn-shanghai.aliyuncs.com/fisherOne/dyjx/video/201908/20190812135218f88794b1be29468ca04206151b7336eb.jpg',
-          price:100,
-          costPrice: 50,
-          quantitative:1,
-          sales: 200,
-          is_in_low: 0,
-          is_points:1,
-          is_discount:1,
-          is_commission:1,
-          crit: 0,     
-          critRate:0.5,
-          delivery_to:'后厨'
-        }
-      ], //测试数据
       rowOpers:[
         {
           text:'编辑',
@@ -265,9 +246,9 @@ export default {
       console.log(val)
       this.formDep.g_second_id= '' //清除二级菜单值
       this.getTypeSecond(val)    // 获取二级菜单列表
-      if(val==5) {
-        this.istaocan = true   //一级分类为套餐
-      }
+      // if(val==5) {
+      //   this.istaocan = true   //一级分类为套餐
+      // }
     },
   },
   beforeMount(){
@@ -278,6 +259,14 @@ export default {
     // this.getTypeSecond('商品二级分类','g_second_name',2)
   },
   methods:{
+    handleTableData(data){
+      data.forEach(e=>{
+        if(e.img_list&&e.img_list.length>0){
+          e.img_list=e.img_list.join(',')
+        }
+      })
+      return data
+    },
     getTypeFirst(){ //获取分类列表
       this.$_app.get('商品一级分类').then(d=>{   
         this.typeFirst = d.data.ret.map(e=>{
@@ -302,6 +291,7 @@ export default {
         if(valid){
           this.$_app.post('商品',this.formDep).then(d=>{
             console.log('商品',d)
+            this.$message.success(d.message || d.msg)
           })
         }
       })
@@ -311,17 +301,13 @@ export default {
     },
     addNext(type){
       if(type==1)
-        this.formDep.goods_specification_list.push({name:''})
-      else if(type==0)
-        this.formDep.mainCommodityArray.push({name:''})
+        this.formDep.goods_specification_list.push( { unit_id:'', price:'', cost_price:'', purchase_quantity:'',  conversion_rate:1 },)
       else 
         this.formDep.remarks_attribute_list.push({name:'',child_attribute:[]})  
     },
     deleteLast(type){
       if(type==1)
         this.formDep.goods_specification_list.pop()
-      else if(type==0) 
-        this.formDep.mainCommodityArray.pop()
       else 
         this.formDep.remarks_attribute_list.pop()    
     },
