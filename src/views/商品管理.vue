@@ -45,9 +45,11 @@
           el-form-item(label="售价" prop="price")
             el-input-number(v-model="formDep.price" :min="1")
           el-form-item(label="成本价" prop="cost_price")
-            el-input-number(v-model="formDep.cost_price" :min="1")
+            el-input-number(v-model="formDep.cost_price" :min="1")  
           el-form-item(label="限购数量" prop="purchase_quantity")
-            el-input-number(v-model="formDep.purchase_quantity" :min="1")        
+            el-input-number(v-model="formDep.purchase_quantity" :min="1")
+          el-form-item(label="总库存" prop="total_inventory")
+            el-input-number(v-model="formDep.total_inventory" :min="0")          
           el-form-item(label="商品规格" prop="goods_specification_list")
             br
             .listContainer
@@ -164,6 +166,7 @@ export default {
         price:'', //单价（售价）
         good_name: '', 
         purchase_quantity:'',
+        total_inventory:'', //库存
         // type: 1,
         // quantitative:1,  //商品属性 (1:可量化，0：不可量化)
         cover_img:'',  //商品封面图
@@ -253,6 +256,7 @@ export default {
         goods_specification_list:[ { required:true, message: '必填'} ],
         purchase_quantity:[ { required: true, message: '请输入限购数量' } ],
         img_list:[ { required: true, message:'请上传图片'} ],
+        total_inventory:[ { required: true, message: '请输入库存'} ],
       }
     }
   },
