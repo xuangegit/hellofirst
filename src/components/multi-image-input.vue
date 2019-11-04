@@ -1,7 +1,6 @@
 <template lang="pug">
   //-
     @description 多图上传组件
-    @author 李小龙
     @date 2018/5/31
   el-upload.file-input(action='' :disabled='disabled' :auto-upload='false' :file-list='fileList' list-type='picture-card' :on-change='fileChange' :on-remove='updateFiles')
     i.el-icon-plus
@@ -42,7 +41,7 @@ export default {
   },
   watch: {
     urls(val) {
-      this.$emit('change', val)
+      this.$emit('change', val.split(','))
     },
     value(val) {
       console.log('val', val)

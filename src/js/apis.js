@@ -30,6 +30,7 @@ const appApi = {
   //商品管理
   商品一级分类:'/api/v1/commodity/first_cate/',
   商品二级分类:'/api/v1/commodity/second_cate/',
+  商品:'/api/v1/commodity/goods/',
   // 部门管理
   部门: '/api/v1/department/department/',
   员工: '/api/v1/department/employee_m/',
