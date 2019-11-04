@@ -52,27 +52,29 @@
             br
             .listContainer
               el-row(class="listItem" v-for="(listItem,index) in formDep.goods_specification_list" :key="index")
-                el-col(:span="8")
-                  el-form-item(label="规格名称" label-width="70px")
+                el-col(:span="12" style="width:50%")
+                  el-form-item(label="规格名称" label-width="90px")
                     el-input(v-model="listItem.specification_name")
-                    //- el-select(v-model="listItem.unit_id")
-                    //-  el-option(v-for="item in unitArray" :key="item.id" :value="item.id" :label="item.name")
-                el-col(:span="8")
+                el-col(:span="12" style="width:50%")    
+                  el-form-item(label="单位")  
+                    el-select(v-model="listItem.unit_id")
+                     el-option(v-for="item in unitArray" :key="item.id" :value="item.id" :label="item.name")
+                el-col(:span="8" style="width:33%")
                   el-form-item(label="单价" label-width="86px")
                     el-input(v-model="listItem.price" :min="0" @keyup="")
-                el-col(:span="8")
+                el-col(:span="8" style="width:33%")
                   el-form-item(label="成本" label-width="70px")
                     el-input(v-model="listItem.cost_price" :min="0")            
-                el-col(:span="8")
-                  el-form-item(label="限购数量" label-width="70px")
+                el-col(:span="8" style="width:33%")
+                  el-form-item(label="限购数量" label-width="90px")
                     el-input(v-model="listItem.purchase_quantity" :min="0")
-                el-col(:span="8")
-                  el-form-item(label="使用转换率" label-width="86px")
+                el-col(:span="16" style="width:50%")
+                  el-form-item(label="是否使用转换率" label-width="130px")
                     el-radio-group(v-model="listItem.is_conversion")
                       el-radio(:label="1") 是
                       el-radio(:label="0") 否
-                el-col(:span="7" v-if='listItem.is_conversion==1')
-                  el-form-item(label="转换率" label-width="70px")
+                el-col(:span="8" v-if='listItem.is_conversion==1' style="width:50%")
+                  el-form-item(label="转换率" label-width="80px")
                     el-input-number(v-model="listItem.conversion_rate" :min="0")
               .opers
                 el-button(circle icon="el-icon-plus" type="primary" @click="addNext(1)")    
@@ -176,7 +178,7 @@ export default {
         img_list: [],
         goods_specification_list:[  //商品规格
           { unit_id:'', price:'', cost_price:'', purchase_quantity:'', is_conversion:1, conversion_rate:'' },
-          { unit_id:'', price:'', cost_price:'', purchase_quantity:'', is_conversion:1, conversion_rate:'' },
+          // { unit_id:'', price:'', cost_price:'', purchase_quantity:'', is_conversion:1, conversion_rate:'' },
         ],
         // mainCommodityArray:[{name:'',value:'',number:'',unit:''}], //主商品
         // subCommodityArray:[],  //副商品
@@ -388,7 +390,7 @@ export default {
    
   .listItem .el-col{
     padding:5px 0;
-    width:33%;
+    /* width:33%; */
   }
   
 </style>
