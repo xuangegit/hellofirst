@@ -196,7 +196,7 @@ export default {
     init() {
       this.getRoomType()
       this.getPartition()
-      this.getScence()
+      // this.getScence()
     },
     getRoomType(){
       this.typeArray=[]
@@ -218,9 +218,9 @@ export default {
       })
     },
     getScence(){
-      this.$_app.get('场次').then(d=>{
-        console.log('场次',d)
-      })
+      // this.$_app.get('场次').then(d=>{
+      //   console.log('场次',d)
+      // })
     },
     add(){
       this.title = '添加包间'

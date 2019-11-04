@@ -1,0 +1,83 @@
+<template lang="pug">
+  .page
+    page-title 套餐管理
+    crud(name="套餐" :btns-shown="btns" :form='form' ref='form' :row-opers='rowOpers' hasIndex hideSelect ) 
+      .fr(slot="fr")
+        el-button(type="primary" icon="el-icon-plus" @click="add" v-if="btns.includes('添加')||btns.includes('新增')") {{btns.includes('添加')?'添加':'新增'}}
+    el-dialog.mdialog(:title='title' :visible.sync='showModal' :close-on-click-modal='false' @close="dialogClose")
+      .fr(slot="fr")
+        el-button(type="primary" icon="el-icon-plus" @click="add" v-if="btns.includes('添加')||btns.includes('新增')") {{btns.includes('添加')?'添加':'新增'}}
+      el-form(label-width="130px" :model="formDep" :rules="rules" ref="formDep")
+        el-form-item(label="套餐名" prop="name")
+          el-input(v-model="formDep.name") 
+        el-form-item(label="单价" prop="unit_price")
+          el-input-number(v-model="formDep.unit_price" :min="0")
+        el-form-item(label="限购量" prop="purchase_quantity")
+          el-input-number(v-model="formDep.purchase_quantity" :min="1")
+        el-form-item(label="总库存" prop="total_inventory")
+          el-input-number(v-model="formDep.total_inventory" :min="1") 
+        el-form-item(label="是否参与积分" prop="is_points")
+          el-radio-group(v-model="formDep.is_points")
+            el-radio(:label="1") 是
+            el-radio(:label="0") 否
+        el-form-item(label="是否参与抵消" prop="is_in_low")
+          el-radio-group(v-model="formDep.is_in_low")
+            el-radio(:label="1") 是
+            el-radio(:label="0") 否  
+        el-form-item(label="是否参与折扣" prop="is_discount")
+          el-radio-group(v-model="formDep.is_discount")
+            el-radio(:label="1") 是
+            el-radio(:label="0") 否
+        el-form-item(label="是否参与提成" prop="is_commission")
+          el-radio-group(v-model="formDep.is_commission")
+            el-radio(:label="1") 是
+            el-radio(:label="0") 否 
+        el-form-item(label="套餐图片集" prop="image_list")
+           multi-image-input(type="muti-image" v-model="formDep.image_list" )          
+      .btns(slot='footer')
+        el-button(type='primary' @click='confirm') 确定
+        el-button(@click='showModal = false') 取消      
+</template>
+<script>
+
+export default {
+  components:{
+    // goodsList
+  },
+  data(){
+    return {
+      showModal: false,
+      title: '添加套餐',
+      form: {
+        pg:1,
+        size:20
+      },
+      formDep:{
+        name:'',
+        unit_price:'',
+        total_inventory:'',
+        purchase_quantity:'',
+        is_points:1,
+        is_in_low:'',
+        is_discount:'',
+        is_commission:'',
+        image_list:'', //图片集
+      },
+      rowOpers:[],
+      rules:{},
+    }
+  },
+  mounted(){},
+  methods:{
+    add(){
+      this.showModal=true
+    },
+    dialogClose(){
+
+    },
+    confirm(){
+
+    }
+  }
+}
+</script>>

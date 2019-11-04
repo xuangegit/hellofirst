@@ -21,16 +21,21 @@
         el-option(v-for='(value, key) in attr.mapper' :key='key' :label='value' :value='Number(key)')
       el-select(v-if='attr.type=="bool"' v-model='form[attr.prop]' placeholder="请选择"   )
         el-option(v-for='(value, key) in attr.mapper' :key='key' :label='value' :value='String(key)')
+      el-radio-group(v-if='attr.type=="radio"' v-model='form[attr.prop]')
+        el-radio(:label="1") 是
+        el-radio(:label="0") 否  
+        //- el-radio(v-for="(value, key) in attr.mapper" :key="key" :label="Number(value)") {{value}}  
       el-input-number(v-if='attr.type=="natural"' v-model='form[attr.prop]' :min='0' :max='attr.naturalMax')
       file-input(v-if='attr.type=="image"' v-model='form[attr.prop]')
       file-input(v-if='attr.type=="apk"' v-model='form[attr.prop]' type="apk")
       multi-img-input(v-if='attr.type=="multi-image"' v-model='form[attr.prop]' :num='attr.num')
+      //- good_list(v-if="attr.type=='good_list'" v-model='form[attr.prop]')
       slot(v-if='attr.type === "slot"')
 </template>
 <script>
 import FileInput from './file-input'
 import MultiImgInput from './multi-image-input'
-
+// import goodList from './List-box/goods_list'
 export default {
   computed: {
     staffBtnStyle() {
@@ -39,7 +44,8 @@ export default {
   },
   components: {
     FileInput,
-    MultiImgInput
+    MultiImgInput,
+    // goodList
   },
   props: ['model', 'form', 'isInsert', 'isEdit', 'isInfo'],
   mounted() {
@@ -49,6 +55,8 @@ export default {
       if (!(attr.prop in this.form)) {
         this.$set(this.form, attr.prop, '')
       }
+      if(attr.isArray)
+      this.form[attr.prop] = []
     }
   },
   methods: {

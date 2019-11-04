@@ -3,8 +3,8 @@ export default {
   g_second_name:['商品类别'],
   cover_img:['商品图片','image'],
   img_list:['图片集','multi-image',{minWidth: '180px'}],
-  unit_price: ['单价(元)'],
-  good_cost: ['成本价(元)'],
+  price: ['单价(元)'],
+  cost_price: ['成本价(元)'],
   sales_volume: ['销量'],
   is_in_low: ['参与抵消', 'select', {mapper:{0:'否',1:'是'}}],
   is_points: ['参与积分', 'select',{

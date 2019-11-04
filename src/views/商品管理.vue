@@ -2,7 +2,7 @@
   .page
     page-title 商品管理
     //- <img src="http://bird-fisher.oss-cn-shanghai.aliyuncs.com/fisherOne/toutiao/toutiaoImg/1572493197316_girl.jpg" />
-    crud(name="商品" :btns-shown="btns" :form='form' ref='form' :row-opers='rowOpers' hasIndex hideSelect )
+    crud(name="商品" :btns-shown="btns" :form='form' ref='form' :row-opers='rowOpers' hasIndex hideSelect :handle-table-data="handleTableData")
       .fr(slot="fr")
         el-button(type="primary" icon="el-icon-plus" @click="add" v-if="btns.includes('添加')||btns.includes('新增')") {{btns.includes('添加')?'添加':'新增'}}
     el-dialog.mdialog(:title='title' :visible.sync='showModal' :close-on-click-modal='false' width="850px" @close="dialogClose")
@@ -117,8 +117,8 @@
             el-input(type="textarea" v-model="formDep.introduction" :autosize="{ minRows: 2, maxRows: 4}")
           el-form-item(label="商品详情" prop="details")
             my-editor(v-model="formDep.details")  
-          el-form-item(label="商品图片" prop="cover_img")
-           file-input(type="image" v-model="formDep.cover_img")
+          //- el-form-item(label="商品图片" prop="cover_img")
+          //-  file-input(type="image" v-model="formDep.cover_img")
           el-form-item(label="商品图片集" prop="img_list")
            multi-image-input(type="muti-image" v-model="formDep.img_list" )      
         .btns(slot='footer')   
@@ -169,7 +169,7 @@ export default {
         total_inventory:'', //库存
         // type: 1,
         // quantitative:1,  //商品属性 (1:可量化，0：不可量化)
-        cover_img:'',  //商品封面图
+        // cover_img:'',  //商品封面图
         is_in_low: 1,
         is_points:1,
         is_discount:1,
@@ -223,7 +223,7 @@ export default {
         price: [ { required: true, message: '请输入售价'} ],
         cost_price: [ { required: true, message: '请输入成本价'}],
         label:[ { required: true} ],
-        cover_img:[ {required :true, message: '必选' } ],
+        // cover_img:[ {required :true, message: '必选' } ],
         // crit:[{required:true,message:'必选'}],
         // critRate:[{required:true,message:'必填'}],
         is_points:[{required:true,message:'必选'}],
@@ -262,7 +262,7 @@ export default {
     handleTableData(data){
       data.forEach(e=>{
         if(e.img_list&&e.img_list.length>0){
-          e.img_list=e.img_list.join(',')
+          e.cover_img=e.img_list[0]
         }
       })
       return data

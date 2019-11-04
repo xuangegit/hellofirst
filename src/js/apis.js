@@ -31,11 +31,12 @@ const appApi = {
   商品一级分类:'/api/v1/commodity/first_cate/',
   商品二级分类:'/api/v1/commodity/second_cate/',
   商品:'/api/v1/commodity/goods/',
+  套餐:'/api/v1/commodity/good_package/',
   // 部门管理
   部门: '/api/v1/department/department/',
   员工: '/api/v1/department/employee_m/',
   职位: '/api/v1/department/position_m/',
-  部门领导人:'/api/v1/department/department_leader_list/?department_id',
+  部门领导人:'/api/v1/department/department_leader_list/',
   部门领导职位:'/api/v1/department/query_department_position/',
   职位领导人员:'/department/multiple_position/',
 
