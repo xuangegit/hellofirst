@@ -4,7 +4,7 @@
     crud(name="套餐" :btns-shown="btns" :form='form' ref='form' :row-opers='rowOpers' hasIndex hideSelect ) 
       .fr(slot="fr")
         el-button(type="primary" icon="el-icon-plus" @click="add" v-if="btns.includes('添加')||btns.includes('新增')") {{btns.includes('添加')?'添加':'新增'}}
-    el-dialog.mdialog(:title='title' :visible.sync='showModal' :close-on-click-modal='false' @close="dialogClose")
+    el-dialog.mdialog(:title='title' :visible.sync='showModal' :close-on-click-modal='false' @close="dialogClose" width="760px")
       .fr(slot="fr")
         el-button(type="primary" icon="el-icon-plus" @click="add" v-if="btns.includes('添加')||btns.includes('新增')") {{btns.includes('添加')?'添加':'新增'}}
       el-form(label-width="130px" :model="formDep" :rules="rules" ref="formDep")
@@ -32,6 +32,8 @@
           el-radio-group(v-model="formDep.is_commission")
             el-radio(:label="1") 是
             el-radio(:label="0") 否 
+        el-form-item(label="包含商品")
+          goods-list    
         el-form-item(label="套餐图片集" prop="image_list")
            multi-image-input(type="muti-image" v-model="formDep.image_list" )          
       .btns(slot='footer')
@@ -39,10 +41,12 @@
         el-button(@click='showModal = false') 取消      
 </template>
 <script>
-
+import multiImageInput from '@/components/multi-image-input'
+import goodsList from '@/components/List-box/goods_list'
 export default {
   components:{
-    // goodsList
+    multiImageInput,
+    goodsList
   },
   data(){
     return {
