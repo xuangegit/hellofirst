@@ -32,8 +32,8 @@
           el-radio-group(v-model="formDep.is_commission")
             el-radio(:label="1") 是
             el-radio(:label="0") 否 
-        el-form-item(label="包含商品")
-          goods-list    
+        el-form-item(label="包含商品" prop="product_list")
+          goods-list(v-model="formDep.product_list")    
         el-form-item(label="套餐图片集" prop="image_list")
            multi-image-input(type="muti-image" v-model="formDep.image_list" )          
       .btns(slot='footer')
@@ -65,9 +65,18 @@ export default {
         is_in_low:'',
         is_discount:'',
         is_commission:'',
+        product_list:[{good_specification_id:'',quantity:''}],
         image_list:'', //图片集
       },
-      rowOpers:[],
+      rowOpers:[
+        {
+          text:'商品详细',
+          type:"info",
+          handler:row=>{
+            console.log('套餐行',row)
+          }
+        }
+      ],
       rules:{},
     }
   },
@@ -77,10 +86,12 @@ export default {
       this.showModal=true
     },
     dialogClose(){
-
+      this.$nextTick(()=>{
+        this.$refs.formDep.resetFields()
+      })
     },
     confirm(){
-
+      console.log('formDep',this.formDep)
     }
   }
 }
