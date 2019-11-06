@@ -29,7 +29,7 @@ axios.interceptors.response.use(res => {
   if (res.data.code == 1) return res.data
   else {
     if(res.data.code==-2){
-      vm.$message.error('用户名或密码不正确')
+      vm.$message.error(res.data.message)
     }else if (res.data.code >= 20050 && res.data.code <= 20053) {
       debounce('appjs', () => {
         // vm.$notify({ title: '未登录', message: '自动返回登录页' })

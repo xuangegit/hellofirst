@@ -1,7 +1,7 @@
 <template lang="pug">
   .page
     page-title 套餐管理
-    crud(name="套餐" :btns-shown="btns" :form='form' ref='form' :row-opers='rowOpers' hasIndex hideSelect ) 
+    crud(name="套餐" :btns-shown="btns" :form='form' ref='form' :row-opers='rowOpers' hasIndex hideSelect hasDelete) 
       .fr(slot="fr")
         el-button(type="primary" icon="el-icon-plus" @click="add" v-if="btns.includes('添加')||btns.includes('新增')") {{btns.includes('添加')?'添加':'新增'}}
     el-dialog.mdialog(:title='title' :visible.sync='showModal' :close-on-click-modal='false' @close="dialogClose" width="760px")
@@ -39,6 +39,8 @@
       .btns(slot='footer')
         el-button(type='primary' @click='confirm') 确定
         el-button(@click='showModal = false') 取消      
+    //- el-dialog.mdialog(title='商品详情' :visible.sync='goodDialog' :close-on-click-modal='false'  width="760px")
+        
 </template>
 <script>
 import multiImageInput from '@/components/multi-image-input'
@@ -70,14 +72,25 @@ export default {
       },
       rowOpers:[
         {
-          text:'商品详细',
+          text:'商品详情',
           type:"info",
           handler:row=>{
             console.log('套餐行',row)
           }
         }
       ],
-      rules:{},
+      rules:{
+        name: [ { required: true, message: '请输入套餐名称'} ],
+        unit_price: [ { required: true, message: '请输入单价'} ],
+        purchase_quantity: [ { required: true, message: '请输入限购量'} ],
+        total_inventory: [ { required: true, message: '请输入库存'} ],
+        is_points: [ { required: true, message: '请输选择'} ],
+        is_in_low: [ { required: true, message: '请输选择'} ],
+        is_discount: [ { required: true, message: '请输选择'} ],
+        is_commission: [ { required: true, message: '请输选择'} ],
+        product_list:[ {required: true, message:'请输入包含的商品'}],
+        image_list: [ { required: true, message: '请选择上传的图片'} ]
+      },
     }
   },
   mounted(){},
@@ -92,6 +105,16 @@ export default {
     },
     confirm(){
       console.log('formDep',this.formDep)
+      this.$refs.formDep.validate(valid=>{
+        if(valid){
+          this.$_app.post('套餐',this.formDep).then(d=>{
+            this.$message.success(d.message||d.msg)
+            this.$refs.formDep.resetFields()
+            this.showModal =false
+            this.$refs.form.select()
+          })
+        }
+      })
     }
   }
 }
