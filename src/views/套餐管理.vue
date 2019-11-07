@@ -1,7 +1,7 @@
 <template lang="pug">
   .page
     page-title 套餐管理
-    crud(name="套餐" :btns-shown="btns" :form='form' ref='form' :row-opers='rowOpers' hasIndex hideSelect hasDelete) 
+    crud(name="套餐" :btns-shown="btns" :form='form' ref='form' :row-opers='rowOpers' hasIndex hideSelect hasDelete :select-model-src="selectModelSrc") 
       .fr(slot="fr")
         el-button(type="primary" icon="el-icon-plus" @click="add" v-if="btns.includes('添加')||btns.includes('新增')") {{btns.includes('添加')?'添加':'新增'}}
     el-dialog.mdialog(:title='title' :visible.sync='showModal' :close-on-click-modal='false' @close="dialogClose" width="760px")
@@ -38,8 +38,10 @@
            multi-image-input(type="muti-image" v-model="formDep.image_list" )          
       .btns(slot='footer')
         el-button(type='primary' @click='confirm') 确定
-        el-button(@click='showModal = false') 取消      
-    //- el-dialog.mdialog(title='商品详情' :visible.sync='goodDialog' :close-on-click-modal='false'  width="760px")
+        el-button(@click='showModal = false') 取消  
+    //- 商品详情弹框        
+    el-dialog.mdialog(title='商品详情' :visible.sync='goodDialog' :close-on-click-modal='false'  width="760px")
+      crud(name="套餐商品" :form="goodForm" ref="goodForm" :model-src="modelSrc_good" hidePaging :row-opers="goodOpers")
         
 </template>
 <script>
@@ -53,10 +55,22 @@ export default {
   data(){
     return {
       showModal: false,
+      selectModelSrc:{
+        id:''
+      },
+      modelSrc_good:{  //商品详情表格表头字段名
+        name:['商品-规格'],
+        quantity:['数量'],
+        original_price:['零售价'],
+        unit:['单位'],
+      },
       title: '添加套餐',
       form: {
         pg:1,
         size:20
+      },
+      goodForm:{
+        // good_package_id:'' //套餐id
       },
       formDep:{
         name:'',
@@ -76,6 +90,17 @@ export default {
           type:"info",
           handler:row=>{
             console.log('套餐行',row)
+          }
+        }
+      ],
+      //商品详情列表格操作列逻辑
+      goodOpers:[
+        {
+          text:'删除',
+          type:'danger',
+          handler:row=>{
+            console.log('商品信息id',row.id)
+            this.$_app.delete('商品套餐')
           }
         }
       ],

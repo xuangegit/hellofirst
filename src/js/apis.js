@@ -32,6 +32,7 @@ const appApi = {
   商品二级分类:'/api/v1/commodity/second_cate/',
   商品:'/api/v1/commodity/goods/',
   套餐:'/api/v1/commodity/good_package/',
+  套餐商品:'/api/v1/commodity/good_package_contains_content/', 
   商品规格:'/api/v1/commodity/goods_specification/',
   // 部门管理
   部门: '/api/v1/department/department/',
