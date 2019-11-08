@@ -70,7 +70,7 @@ export default {
         size:20
       },
       goodForm:{
-        // good_package_id:'' //套餐id
+        good_package_id:'' //套餐id
       },
       formDep:{
         name:'',
