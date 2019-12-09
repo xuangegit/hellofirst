@@ -43,6 +43,11 @@ export function getRandom(range,type){
     return Math.ceil(digital)  // 0  -  range 
 }
 //时间日期相关
+export function getYestodayToCN(){
+  var cur = new Date()
+  var lastMonthDate = new Date(cur.getTime() -(24*3600*1000))
+  return formatToCNMonth(lastMonthDate)
+}
 export function formatDate(d, format) {
   var o = {
     'M+': d.getMonth() + 1, // month
