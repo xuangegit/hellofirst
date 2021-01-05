@@ -10,7 +10,7 @@
   "dependencies": {
     "@tinymce/tinymce-vue": "^3.0.1",
     "ali-oss": "^6.1.0",
-    "axios": "^0.18.1",
+    "axios": "^0.21.1",
     "babel-plugin-component": "^1.1.1",
     "bird-ui": "^0.1.5",
     "browser-md5-file": "^1.1.1",
